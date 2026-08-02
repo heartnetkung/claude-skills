@@ -16,7 +16,10 @@ a user. Rules that cannot be universally true must be chosen out loud.
 ```
 - Be Concise in your answer.
 - Be minimalist in your design.
-  - Add a field, class, or layer only when something reads it. No speculative "Phase 2+" plumbing — reintroduce it when a consumer lands
+  - Add a field, class, parameter, or column only when something reads it now. No speculative plumbing — reintroduce it when a consumer lands.
+- Comments describe code that exists.
+  - No roadmap comments ("Phase 2 field", "every later arm keeps this", "v2 axis"). Usually a symptom — delete what one justifies, not just the comment.
+  - Cite contract.md in the same package, nothing else. Never a section number: §5b renumbers silently and no tool checks it.
 - Do not edit tach rules. If not editing the rules introduce significant boilerplate, stop and ask user.
 - Use red-green TDD.
 - Prioritize code reuse. Refactor existing shared code to support new use case if need be.
@@ -31,13 +34,22 @@ Each earns its place by pairing with something installed:
 | Rule | Enforced by |
 |---|---|
 | no speculative plumbing | `vulture` (`min_confidence = 80`) |
+| no roadmap comments | `vulture`, for the code the comment justifies |
+| cite contract.md, never a section number | vendored `module-contract` skill |
 | do not edit tach rules | `tach check` in pre-commit |
 | red-green TDD | `pytest` + coverage `branch = true` |
 | contract before spec | vendored `module-contract` skill |
 
-Drop the tach rule if the user declined layers. Drop the `module-contract`
-sub-bullet if the skill was not vendored. Otherwise a rule points at something
-that is not there, and the whole file starts reading as decoration.
+The comment rules are the one pair no tool checks directly, and that is the
+point of writing them down: `vulture` deletes unreachable code but has nothing
+to say about a comment promising a version that never ships. The rule survives
+by saying which artifact is the real problem — the field, not the sentence
+describing it.
+
+Drop the tach rule if the user declined layers. Drop both `module-contract`
+lines — the contract.md citation rule and the spec sub-bullet — if the skill
+was not vendored. Otherwise a rule points at something that is not there, and
+the whole file starts reading as decoration.
 
 ---
 
