@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# Tooling configuration — frozen. Every section here is project-agnostic and is
+# copied verbatim by the python-scaffold skill. Only {{PKG}} is substituted.
+#
+# These settings are what make the pre-commit hooks meaningful; loosening one
+# quietly disables a hook rather than fixing what it caught.
+# ---------------------------------------------------------------------------
+
+[tool.ruff]
+src = ["src", "tests"]
+target-version = "py{{PY_NODOT}}"
+line-length = 100
+
+[tool.ruff.lint]
+# E/F pyflakes+pycodestyle, I import order, UP pyupgrade,
+# B bugbear (real bug shapes), SIM needless complexity.
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pyright]
+include = ["src", "tests"]
+pythonVersion = "{{PY}}"
+# strict is the point. An untyped third-party dep gets a stub in typings/,
+# never a downgrade to basic.
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov={{PKG}} --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["{{PKG}}"]
+branch = true
+
+[tool.deptry]
+known_first_party = ["{{PKG}}"]
+# Deps used but never imported (plugin backends, drivers) go here, with a
+# comment saying who loads them. Mirror every entry in tach.toml [external].
+# [tool.deptry.per_rule_ignores]
+# DEP002 = []
+
+[tool.vulture]
+paths = ["src", "tests"]
+min_confidence = 80

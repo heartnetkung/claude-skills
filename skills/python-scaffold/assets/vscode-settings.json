@@ -1,0 +1,9 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "files.exclude": {
+    "**/.coverage": true,
+    "**/.hypothesis": true,
+    "**/.ruff_cache": true,
+    "**/.vscode": true
+  }
+}
