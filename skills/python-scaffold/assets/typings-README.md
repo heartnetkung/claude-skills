@@ -18,6 +18,7 @@ else's. A stub is a few lines and confines the gap to one file.
 # typings/somepkg/__init__.pyi
 from typing import Any
 
+
 class Client:
     def __init__(self, api_key: str) -> None: ...
     def query(self, text: str, top_k: int = ...) -> list[dict[str, Any]]: ...

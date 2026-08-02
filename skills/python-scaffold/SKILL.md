@@ -1,6 +1,6 @@
 ---
 name: python-scaffold
-description: Scaffold a new Python project with strict tooling — uv, src layout, ruff, pyright strict, tach layer enforcement, deptry, vulture, and a 9-hook pre-commit gate. Use when starting a new Python project, repo, or package from scratch, or when asked to set up Python project structure, linting, type checking, or architectural boundaries for a fresh codebase. Greenfield only.
+description: Scaffold a new Python project with strict tooling — uv, src layout, ruff, pyright strict, tach layer enforcement, deptry, vulture, and an 8-hook pre-commit gate. Use when starting a new Python project, repo, or package from scratch, or when asked to set up Python project structure, linting, type checking, or architectural boundaries for a fresh codebase. Greenfield only.
 ---
 
 # Scaffold a Python project
@@ -109,6 +109,7 @@ Create, substituting `{{PKG}}` `{{PROJECT}}` `{{PY}}` `{{PY_NODOT}}` (e.g. `3.13
 | `.vscode/settings.json` | `assets/vscode-settings.json` | frozen |
 | `.claude/settings.json` | `assets/claude-settings.json` | frozen |
 | `tests/conftest.py` | `assets/conftest.py` | frozen |
+| `tests/test_smoke.py` | `assets/test_smoke.py` | substitute |
 | `.env.example` | `assets/env.example` | frozen |
 | `typings/README.md` | `assets/typings-README.md` | frozen |
 | `README.md` | `assets/README.md` | substitute |
@@ -156,9 +157,16 @@ checks teaches the user to ignore them, which costs more than the scaffold
 saves. If a hook fails, fix the scaffold and rerun — never hand over with a
 caveat, and never disable the hook that caught it.
 
-Watch for: `vulture` flagging empty `__init__.py` (it should not at confidence
-80), and `pytest` exiting 5 on no tests collected — if that surfaces, ship a
-real trivial test rather than adding `--exitfirst` or similar muffling.
+`tests/test_smoke.py` exists because `pytest` exits 5 on an empty suite. It is
+a placeholder with a docstring saying so — do not "fix" an empty suite by
+muffling the exit code instead.
+
+`ruff format --check` covers Python inside Markdown fences, so a code sample in
+a `.md` asset has to be formatter-clean like any other code.
+
+`tach check` warns "No first-party imports were found" on a scaffold with no
+code yet. It passes; the warning goes away with the first real import. Do not
+chase it by editing source roots.
 
 ## Step 5 — Vendor `module-contract`
 

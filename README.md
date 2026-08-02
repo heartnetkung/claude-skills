@@ -4,7 +4,7 @@ Personal Claude Code skills, packaged as one plugin.
 
 | Skill | What it does |
 |---|---|
-| `python-scaffold` | Scaffolds a greenfield Python project — uv, `src/` layout, ruff, pyright strict, tach layers, deptry, vulture, 9-hook pre-commit gate |
+| `python-scaffold` | Scaffolds a greenfield Python project — uv, `src/` layout, ruff, pyright strict, tach layers, deptry, vulture, 8-hook pre-commit gate |
 | `module-contract` | Governs `contract.md` (permanent) vs `spec.md` (deleted when the module lands) |
 
 ## Install
