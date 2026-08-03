@@ -1,4 +1,4 @@
-<!-- Worked example for the module-contract skill: a snapshot of a real contract.md, kept
+<!-- Worked example for the module-design skill: a snapshot of a real contract.md, kept
      frozen as a teaching artifact. Read it for calibration and voice, not as a template —
      it exercises five of the seven kinds because that is what this module earned. -->
 

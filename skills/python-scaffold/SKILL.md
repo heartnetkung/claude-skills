@@ -117,7 +117,7 @@ Create, substituting `{{PKG}}` `{{PROJECT}}` `{{PY}}` `{{PY_NODOT}}` (e.g. `3.13
 | `CLAUDE.md` | `assets/claude-md-rules.md` | assemble from bank |
 | `tach.toml` | Step 2 | generate |
 | `.github/workflows/checks.yml` | `assets/ci.yml` | frozen, if opted in |
-| `.claude/skills/module-contract/` | `../module-contract/` | vendor, see Step 5 |
+| `.claude/skills/module-design/` | `../module-design/` | vendor, see Step 5 |
 
 `pyproject.toml` head — generated, everything below is the frozen tool block:
 
@@ -168,10 +168,12 @@ a `.md` asset has to be formatter-clean like any other code.
 code yet. It passes; the warning goes away with the first real import. Do not
 chase it by editing source roots.
 
-## Step 5 — Vendor `module-contract`
+## Step 5 — Vendor `module-design`
 
-Copy this plugin's `skills/module-contract/` into the new project's
-`.claude/skills/module-contract/`, and add to the top of its `SKILL.md`:
+Copy this plugin's `skills/module-design/` into the new project's
+`.claude/skills/module-design/`, and add to its `SKILL.md` immediately *after* the closing `---`
+of the frontmatter block — above it displaces the frontmatter and the skill stops being
+discoverable, silently:
 
 ```
 <!-- Vendored from claude-skills. Edit there, then re-vendor. -->
@@ -188,7 +190,7 @@ normal cost of a template, and it is cheaper than the alternative.
 ## Step 6 — Hand off
 
 Show the layer diagram and the bootstrap commands, then point at
-`module-contract` for the first module — `contract.md` before any code.
+`module-design` for the first module — it runs the whole design sequence before any code.
 
 ---
 
