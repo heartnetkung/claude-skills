@@ -210,6 +210,10 @@ modes show up.
 judge against it: deep modules, information hiding, complexity as something that accumulates one
 small decision at a time.
 
+**Review every variable and class name.** Each should be understandable and meaningful on its
+own, and reveal the code's purpose. Two names that differ must denote different things: if you
+cannot say what separates them, one of them should not exist.
+
 Resolve that file's **absolute path before spawning** — the agent starts cold and cannot resolve
 "next to the skill you were spawned from", and neither can you when this skill is loaded from a
 plugin rather than a vendored copy, because the body arrives as text with no path attached. Glob
