@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-skills",
-  "description": "Personal Claude Code skills: Python project scaffolding and module documentation discipline",
+  "description": "Personal Claude Code skills: Python project scaffolding, module design discipline, and slow-suite filing",
   "owner": {
     "name": "heartnetkung",
     "email": "heartnetkung@gmail.com"

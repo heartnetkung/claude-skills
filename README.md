@@ -6,6 +6,7 @@ Personal Claude Code skills, packaged as one plugin.
 |---|---|
 | `python-scaffold` | Scaffolds a greenfield Python project — uv, `src/` layout, ruff, pyright strict, tach layers, deptry, vulture, 8-hook pre-commit gate |
 | `module-design` | Designs a module before coding it — `contract.md` (permanent) vs `spec.md`/`boundary.md` (deleted when the module lands), then two parallel review agents |
+| `slow-pytest-maintenance` | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
 
 ## Install
 
@@ -27,13 +28,31 @@ skills/
   python-scaffold/
     SKILL.md            the procedure
     assets/             files copied into scaffolded projects
-  module-design/        source of truth; vendored into each project
-    SKILL.md            the procedure
-    example-contract.md worked example, read for calibration
+  module-design/
+    SKILL.md            entry point; routes to one phase file, never both
+    design.md           phase 1 — contract, spec, boundary, the two reviewers
+    merge.md            phase 2 — six steps, ending in deleting the build docs
+    removal.md          cutting an over-length contract back under the cap
+    reviewer-common.md  rules both review agents read first
+    reviewer-simplification.md  reviewer 1's rubric
+    reviewer-design.md  reviewer 2's rubric
+    example-contract.md worked example, read for calibration; a frozen snapshot
+                        of one real project's contract, deliberately not generic
     design-philosophy.md  reference file, not a skill; only the design reviewer
                           agent is handed this path
-    LICENSE-design-philosophy  upstream MIT text, travels with the vendored copy
+    LICENSE-design-philosophy  upstream MIT text, travels with the copy
+  slow-pytest-maintenance/
+    SKILL.md            the threshold and the stop rule
+    file-issue.sh       the one issue it files, with client-side dedupe
 ```
+
+`module-design` and `slow-pytest-maintenance` are copied into projects that want them
+without a plugin install. **Both copies are sources of truth** — edit whichever you are
+sitting in and mirror the change to the other. Neither carries a "vendored from" banner,
+because there is no one direction to point it.
+
+`slow-pytest-maintenance` assumes pytest, `uv`, `gh`, and a `maintenance` label in the
+repo; it hardcodes 15s. A project that wants a different threshold edits its own copy.
 
 ## Assets: frozen vs. generated
 
