@@ -27,8 +27,15 @@ normal.
 
 ## Step 1 — Interview
 
-One `AskUserQuestion` call, all questions together. Do not ask them one at a
-time across turns.
+**Two `AskUserQuestion` calls, four questions then three.** `AskUserQuestion`
+takes at most four per call, so seven cannot go out at once. Two calls, not
+seven turns: a scaffold interview that dribbles one question per turn is what
+this is guarding against.
+
+The split is not arbitrary — CI is in the first call because the last question
+of the second reads its answer.
+
+First call:
 
 1. **Package name** — becomes `src/<pkg>/`. Must be a valid identifier:
    lowercase, underscores, no hyphens. The *project* name (PyPI/repo name) may
@@ -36,15 +43,18 @@ time across turns.
 2. **Python version** — offer the two most recent stable releases. Default to
    the newest.
 3. **Layers** — see Step 2. This is the question that matters; give it room.
-4. **Git workflow** — solo (default) or team. Selects a `claude-md-rules.md`
+4. **CI** — add `.github/workflows/checks.yml`? Default yes.
+
+Second call:
+
+5. **Git workflow** — solo (default) or team. Selects a `claude-md-rules.md`
    ASK rule.
-5. **Rigor stance** — normal (default) or explicitly experimental. Default emits
+6. **Rigor stance** — normal (default) or explicitly experimental. Default emits
    nothing; see the rule bank on why this is never inferred.
-6. **CI** — add `.github/workflows/checks.yml`? Default yes.
 7. **Slow-suite filing** — vendor `slow-pytest-maintenance`? Default yes when CI
-   was accepted. It files a GitHub issue when the suite crosses 15s, so it needs
-   a repo with a `maintenance` label; without one `gh issue create` fails and the
-   skill is decoration.
+   was accepted above. It files a GitHub issue when the suite crosses 15s, so it
+   needs a repo with a `maintenance` label; without one `gh issue create` fails
+   and the skill is decoration.
 
 ## Step 2 — Layers, the part worth slowing down for
 
