@@ -9,7 +9,9 @@
       "Bash(uv run vulture:*)",
       "Bash(uv run pre-commit:*)",
       "Bash(uv sync:*)",
-      "Bash(uv add:*)"
-    ]
+      "Bash(uv add:*)",
+      "Bash(claude -p:*)"
+    ],
+    "deny": ["Read(./uv.lock)"]
   }
 }

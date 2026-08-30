@@ -41,6 +41,10 @@ time across turns.
 5. **Rigor stance** — normal (default) or explicitly experimental. Default emits
    nothing; see the rule bank on why this is never inferred.
 6. **CI** — add `.github/workflows/checks.yml`? Default yes.
+7. **Slow-suite filing** — vendor `slow-pytest-maintenance`? Default yes when CI
+   was accepted. It files a GitHub issue when the suite crosses 15s, so it needs
+   a repo with a `maintenance` label; without one `gh issue create` fails and the
+   skill is decoration.
 
 ## Step 2 — Layers, the part worth slowing down for
 
@@ -118,6 +122,11 @@ Create, substituting `{{PKG}}` `{{PROJECT}}` `{{PY}}` `{{PY_NODOT}}` (e.g. `3.13
 | `tach.toml` | Step 2 | generate |
 | `.github/workflows/checks.yml` | `assets/ci.yml` | frozen, if opted in |
 | `.claude/skills/module-design/` | `../module-design/` | vendor, see Step 5 |
+| `.claude/skills/slow-pytest-maintenance/` | `../slow-pytest-maintenance/` | vendor, if opted in |
+
+`claude-settings.json` denies `Read(./uv.lock)`. `module-design`'s reviewer rules
+ask for the same thing in prose; the deny is the half an agent cannot forget. It
+is a permission rule and not a comment, so the reason lives here.
 
 `pyproject.toml` head — generated, everything below is the frozen tool block:
 
@@ -168,29 +177,34 @@ a `.md` asset has to be formatter-clean like any other code.
 code yet. It passes; the warning goes away with the first real import. Do not
 chase it by editing source roots.
 
-## Step 5 — Vendor `module-design`
+## Step 5 — Vendor the shared skills
 
 Copy this plugin's `skills/module-design/` into the new project's
-`.claude/skills/module-design/`, and add to its `SKILL.md` immediately *after* the closing `---`
-of the frontmatter block — above it displaces the frontmatter and the skill stops being
-discoverable, silently:
-
-```
-<!-- Vendored from claude-skills. Edit there, then re-vendor. -->
-```
+`.claude/skills/module-design/`, unmodified. Same for
+`skills/slow-pytest-maintenance/` if the interview selected it.
 
 It is copied, not linked. Git stores a symlink as its target path, so a link to
 your home directory dangles in every clone and the skill silently disappears.
-The copy makes the project self-contained; the header stops you from editing
-the wrong one.
+The copy makes the project self-contained.
 
-Improvements do not flow backward into already-scaffolded projects. That is the
-normal cost of a template, and it is cheaper than the alternative.
+**Do not stamp the copy with a "vendored from, edit upstream" header.** Both
+places are sources of truth: edit whichever you are sitting in and mirror the
+change to the other. A banner naming one direction was wrong in both — it told
+you to leave the project, and it went stale the first time the upstream copy
+gained a file the project's did not have.
+
+Improvements still do not flow backward on their own into already-scaffolded
+projects. That is the normal cost of a template, and it is cheaper than the
+alternative.
 
 ## Step 6 — Hand off
 
 Show the layer diagram and the bootstrap commands, then point at
 `module-design` for the first module — it runs the whole design sequence before any code.
+
+If `slow-pytest-maintenance` was vendored, say that it needs a `maintenance`
+label on the repo (`gh label create maintenance`) — the scaffold cannot make one
+before a remote exists.
 
 ---
 

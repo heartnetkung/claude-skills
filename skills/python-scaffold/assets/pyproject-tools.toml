@@ -43,3 +43,8 @@ known_first_party = ["{{PKG}}"]
 [tool.vulture]
 paths = ["src", "tests"]
 min_confidence = 80
+# `cls` is the classmethod receiver Python hands in, not a name anyone declared, so a
+# classmethod that never reads it is normal code. Without this the report arrives late and
+# blames the wrong line: it stays quiet for as long as some unrelated line in the file uses
+# `cls` as a local, and fires when that line is deleted.
+ignore_names = ["cls"]

@@ -25,7 +25,10 @@ a user. Rules that cannot be universally true must be chosen out loud.
 - Prioritize code reuse. Refactor existing shared code to support new use case if need be.
 - Always draft spec or show plan to the user prior to coding, so that user can confirm. Spec is for large implementation and plan is for the small. Both should include key logic of what it is doing and in which file/module.
   - For a new module under `src/{{PKG}}/`, invoke the `module-design` skill first — it governs the whole pre-code sequence (`contract.md`, `spec.md`, `boundary.md`, then two review agents) and the build docs' deletion at merge.
+- Editing a `contract.md`: if `wc -l` puts it over 150, read the `module-design` skill's `removal.md` first and make the pass it describes. Most of what bloats a contract is added by changes that never load the module-design skill, so length is the only trigger that fires.
 - When you ask the user to decide something, always provide context and a few choices for user to choose.
+- Before committing a non-trivial change under `src/{{PKG}}/`: run `/simplify`, then code review, then commit (before precommit hook fires).
+  - Never ask the user to type `/code-review`. Invoke it yourself from the repo root as a background subprocess: `claude -p "/code-review" --allowedTools "Read Grep Glob Bash(git *)"`. It runs in a fresh session, reads the working tree and this file, and prints findings to stdout — relay them. Expect minutes on a large diff.
 - extensively log important information across branches execution flow. If something goes wrong, this information will be given to LLM to figure out what's wrong.
 ```
 
@@ -39,6 +42,8 @@ Each earns its place by pairing with something installed:
 | do not edit tach rules | `tach check` in pre-commit |
 | red-green TDD | `pytest` + coverage `branch = true` |
 | contract before spec | vendored `module-design` skill |
+| 150-line contract cap | vendored `module-design` skill (`removal.md`) |
+| `/simplify` then review before commit | both are built-in Claude Code skills |
 
 The comment rules are the one pair no tool checks directly, and that is the
 point of writing them down: `vulture` deletes unreachable code but has nothing
@@ -47,10 +52,18 @@ by routing to a test rather than asserting a verdict: the comment is a signal,
 and the minimalism rule above decides whether the code it describes should go.
 Deleting the sentence and keeping an unread field is the failure mode it names.
 
-Drop the tach rule if the user declined layers. Drop both `module-design`
-lines — the contract.md citation rule and the spec sub-bullet — if the skill
-was not vendored. Otherwise a rule points at something that is not there, and
-the whole file starts reading as decoration.
+Drop the tach rule if the user declined layers. Drop all three `module-design`
+lines — the contract.md citation rule, the spec sub-bullet, and the 150-line
+cap — if the skill was not vendored. Otherwise a rule points at something that
+is not there, and the whole file starts reading as decoration.
+
+The 150-line rule is the only thing that ever opens `removal.md`. Vendoring the
+skill without it ships a file nothing routes to.
+
+The `/simplify` sub-bullet is not padding: without it the model reports the
+review as the user's next step and stops, which is the failure the rule exists
+to prevent. `.claude/settings.json` allows `Bash(claude -p:*)` so the subprocess
+does not prompt.
 
 ---
 

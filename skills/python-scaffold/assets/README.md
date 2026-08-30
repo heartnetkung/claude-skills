@@ -16,6 +16,14 @@ uv run pre-commit run --all-files    # all checks
 uv run pytest                        # just tests
 ```
 
+## Commands
+
+Entry points and what each is for. One block per command, with its cost levers
+and the artifact it writes — `module-design`'s merge step routes usage here, so
+a command that only documents itself in `--help` is half-documented.
+
+_Nothing here yet._
+
 ## Layout
 
 ```
