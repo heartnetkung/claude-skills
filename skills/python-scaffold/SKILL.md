@@ -134,9 +134,17 @@ Create, substituting `{{PKG}}` `{{PROJECT}}` `{{PY}}` `{{PY_NODOT}}` (e.g. `3.13
 | `.claude/skills/module-design/` | `../module-design/` | vendor, see Step 5 |
 | `.claude/skills/slow-pytest-maintenance/` | `../slow-pytest-maintenance/` | vendor, if opted in |
 
-`claude-settings.json` denies `Read(./uv.lock)`. `module-design`'s reviewer rules
-ask for the same thing in prose; the deny is the half an agent cannot forget. It
-is a permission rule and not a comment, so the reason lives here.
+`claude-settings.json` keeps `uv.lock` out of context with a `PreToolUse` hook on
+`Read`, not a `permissions.deny` rule. `module-design`'s reviewer rules ask for the
+same thing in prose; the hook is the half an agent cannot forget. It is config and
+not a comment, so the reason lives here.
+
+A deny rule is the wrong instrument: `Read(./uv.lock)` matches on the file, not the
+tool, so it also stops any `grep -rn ... .` that would walk past the lockfile — and
+because a deny is absolute, that grep prompts even under bypass permissions. The
+hook sees the tool name instead: reading the lockfile whole is blocked, grepping it
+costs only the matching lines and stays free. It tests `file_path` against the raw
+hook JSON with `grep`, so it needs no `jq` on the machine.
 
 `pyproject.toml` head — generated, everything below is the frozen tool block:
 

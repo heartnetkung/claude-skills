@@ -11,7 +11,19 @@
       "Bash(uv sync:*)",
       "Bash(uv add:*)",
       "Bash(claude -p:*)"
-    ],
-    "deny": ["Read(./uv.lock)"]
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -q \"\\\"file_path\\\" *: *\\\"[^\\\"]*uv\\.lock\\\"\" && { echo \"uv.lock is large; grep it instead of reading it whole\" >&2; exit 2; }; exit 0"
+          }
+        ]
+      }
+    ]
   }
 }
