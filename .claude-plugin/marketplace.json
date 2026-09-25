@@ -1,0 +1,47 @@
+{
+  "name": "heartnetkung-skills",
+  "owner": {
+    "name": "heartnetkung"
+  },
+  "metadata": {
+    "description": "Claude Code skills for Python projects, module design, markdown editing, and slide decks",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "python-scaffold",
+      "description": "Scaffolds a greenfield Python project: uv, src/ layout, ruff, pyright strict, tach layers, deptry, vulture, 8-hook pre-commit gate",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/python-scaffold"]
+    },
+    {
+      "name": "module-design",
+      "description": "Designs a module before coding it: contract.md (permanent) vs spec.md/boundary.md (deleted when the module lands), then two parallel review agents",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/module-design"]
+    },
+    {
+      "name": "slow-pytest-maintenance",
+      "description": "Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task. Needs pytest, uv, gh, and a 'maintenance' label",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/slow-pytest-maintenance"]
+    },
+    {
+      "name": "markdown-check",
+      "description": "Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/markdown-check"]
+    },
+    {
+      "name": "slides",
+      "description": "Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change: outline, draft, two reviewers, SVG diagrams, licensed photos. Needs pandoc and LibreOffice",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/slides"]
+    }
+  ]
+}

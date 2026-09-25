@@ -1,6 +1,6 @@
 # claude-skills
 
-Personal Claude Code skills. Projects symlink the ones they want.
+Claude Code skills, installable one at a time as plugins.
 
 | Skill | What it does |
 |---|---|
@@ -12,31 +12,19 @@ Personal Claude Code skills. Projects symlink the ones they want.
 
 ## Install
 
-Symlink each skill a project wants into its `.claude/skills/`. Claude Code puts every
-visible skill's description into context and can trigger it, so link only the skills
-that apply. The commands below assume the project and `claude-skills` sit side by side:
+### Option 1: plugin (one-time install)
 
 ```bash
-mkdir -p .claude/skills
-ln -s ../../../claude-skills/skills/module-design           .claude/skills/module-design
-ln -s ../../../claude-skills/skills/slow-pytest-maintenance .claude/skills/slow-pytest-maintenance
-ln -s ../../../claude-skills/skills/markdown-check          .claude/skills/markdown-check
+claude plugin marketplace add heartnetkung/claude-skills
+claude plugin install slides@heartnetkung-skills
 ```
 
-`python-scaffold` runs before a project exists, and `slides` is used wherever a deck happens to
-live, so link both at user level instead:
+### Option 2: clone and symlink (development, easy updates)
 
 ```bash
-mkdir -p ~/.claude/skills
-ln -s ~/Documents/claude-skills/skills/python-scaffold ~/.claude/skills/python-scaffold
-ln -s ~/Documents/claude-skills/skills/slides          ~/.claude/skills/slides
+git clone https://github.com/heartnetkung/claude-skills.git ~/claude-skills
+ln -s ~/claude-skills/skills/slides ~/.claude/skills/slides
 ```
-
-Run `/skills` in the project to confirm the links are picked up. A committed link is
-broken for anyone who clones the project without `claude-skills` beside it. Gitignore
-`.claude/skills/` if that matters.
-
-Edits here are live: they reach every linked project immediately.
 
 ## Layout
 
