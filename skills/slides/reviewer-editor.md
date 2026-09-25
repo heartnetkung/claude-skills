@@ -23,10 +23,10 @@ first time. Technical terms are fine in speaker notes if the deck's `CLAUDE.md` 
 one: banned words, required numbering (sections, exercises) and whether it's still in sequence,
 title formats, tone. Quote the rule you're applying in the finding.
 
-**4. Limits and layout.** Every `check.py` error and warning, with a concrete fix: which words to
-cut, where to split, or what to move to the notes. Slides over about 6 bullets or tables over 7 rows.
-Anything that looks wrong in the PNG: overlapping elements, an image too small to read, a table
-running into the text below it.
+**4. Limits and layout.** Every `loop.sh` error and warning (linter and `check.py`), with a
+concrete fix: which words to cut, where to split, or what to move to the notes. Slides over about
+6 bullets or tables over 7 rows. Anything that looks wrong in the PNG: overlapping elements, an
+image too small to read, a table running into the text below it.
 
 **5. Images.** Image paths that don't exist. Images from outside the project without a credit
 (source and license) in that slide's notes. An image whose text is unreadable at slide size (roughly

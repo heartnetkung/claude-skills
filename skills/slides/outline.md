@@ -11,10 +11,10 @@ and `images/` would collide with another deck's or a project's.
 Pick `NAME` in kebab-case from the topic; check with the user if it's not obvious. Then the deck
 folder is:
 
+- the current directory's `NAME/` if the user didn't name a folder;
 - the folder the user named, if it's new or empty;
 - otherwise a new subfolder `NAME/` inside it. This covers a project folder with its own
   `CLAUDE.md` or another deck. The project's `CLAUDE.md` still applies to the deck from there.
-- the current directory's `NAME/` if the user didn't say.
 
 **Never edit a `CLAUDE.md` this skill didn't create.** In the deck folder:
 
@@ -54,7 +54,7 @@ reviews it anyway.
 
 **Act on the answers:**
 - Read every source the user points to before writing the outline. When there's no source, anything
-  factual in the draft is a claim to check: list those claims in the presenter comment.
+  factual in the draft is a claim to check: list those claims under Open questions in the outline.
 - Copy a template the user gives into the deck folder as `template.pptx`. Look at an example deck
   or slide and match its density and style.
 - Write every answer into the header of `NAME-outline.md`.
@@ -87,8 +87,6 @@ structure is fixed:
 4. **One closing slide:** `### Thank you! Questions?` It lists the 3–5 questions this audience is
    most likely to ask, with a short answer to each in the speaker notes.
 
-Never two title slides in a row: title → agenda, and every `##` → a `###`.
-
 Write to the interview's answers: its style on the slides, in the request's language. For a deck
 sent to read on its own, write fuller sentences on the slides. For a live talk, write short bullets
 and put the explanation in the notes. When someone else presents, write notes they can deliver
@@ -104,8 +102,8 @@ Then run the loop in `SKILL.md` and fix anything `check.py` reports.
 Once every outline line has its slide, the outline is done. Before deleting it, move what's still
 needed:
 
-- **Audience, goal, the one sentence, delivery, style, language** → a new `CLAUDE.md` in the deck
-  folder, from `<skill-dir>/assets/deck-claude-md.md`. Every later edit follows them.
+- **Audience, goal, the one sentence, delivery, presenter, style, language** → a new `CLAUDE.md` in
+  the deck folder, from `<skill-dir>/assets/deck-claude-md.md`. Every later edit follows them.
 - **Open questions and claims to check** → the HTML comment at the top of `NAME-slides.md`.
 - **Section times** → the agenda slide, if they're not already there.
 

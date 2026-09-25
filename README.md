@@ -81,10 +81,11 @@ skills/
     assets/             frozen: reference.pptx and starters copied into a new deck folder
 ```
 
-`slides` needs `pandoc`, LibreOffice with Python UNO, poppler-utils, Chrome or Chromium for
-diagrams, and numpy for `find_image.py`. `find_image.py` sends this repo's URL as its
-User-Agent, because Wikimedia refuses requests without contact details. The per-deck rules
-(audience, banned words, numbering) live in each deck folder's `CLAUDE.md`, not in the skill.
+`slides` needs `pandoc`, LibreOffice with Python UNO, poppler-utils, the Carlito font (for
+`reference.pptx`'s Calibri), Chrome or Chromium for diagrams, and numpy and Pillow for
+`find_image.py`. `find_image.py` sends this repo's URL as its User-Agent, because Wikimedia
+refuses requests without contact details. The per-deck rules (audience, banned words, numbering)
+live in each deck folder's `CLAUDE.md`, not in the skill.
 
 This repo is the only copy of each skill. Projects link to it and don't vendor it, so there is
 nothing to keep in sync.

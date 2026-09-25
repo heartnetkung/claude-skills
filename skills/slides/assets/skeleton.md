@@ -7,6 +7,7 @@ subtitle: "SUBTITLE"
 HOW TO BUILD
   Use the slides skill, or run pandoc directly:
   pandoc NAME-slides.md -o NAME.pptx --slide-level=3 --reference-doc=reference.pptx
+  (or template.pptx if the folder has one)
 Then upload the .pptx to Google Drive and open it with Google Slides.
 
 STRUCTURE

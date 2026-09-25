@@ -27,7 +27,7 @@ would only draw boxes around them.
 ## Photos: four cases only
 
 1. **Recognition:** the audience has to know what the real thing looks like: an icon they'll click,
-   a screen they'll see, a device they'll use.
+   a device they'll use. Screens are not photos; see Screenshots below.
 2. **An analogy or story:** the slide's point rests on a comparison ("think of it as a new
    colleague"). The photo makes the comparison stick.
 3. **A quote:** a photo of the person quoted.
@@ -43,3 +43,14 @@ Never:
 **Cap:** photos on at most about 10% of content slides, and at most one per section. When there are
 more candidates than that, keep the ones where the photo does the most work: recognition first, then
 examples, then analogies and quotes.
+
+## Screenshots: draw only what you can see exactly
+
+When the audience needs to recognize a screen:
+
+- **Text-based** (a terminal, command output, a simple text interface): draw it. Run the real
+  command and put its exact output in an SVG mockup (see `svg-style.md`).
+- **Anything graphical** (a desktop or web app, a settings page, anything behind a login): **ask the
+  user for a screenshot.** Never draw one: you don't know its current layout, icons, or wording, and
+  a made-up screen sends the audience looking for things that aren't there. Leave
+  `<!-- visual: screenshot needed: what to capture -->` on the slide and list it in your report.

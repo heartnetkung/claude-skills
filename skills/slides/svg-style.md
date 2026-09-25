@@ -1,8 +1,10 @@
 # SVG style for slide diagrams
 
-Diagrams must match the deck (the colors and font of `reference.pptx`) and be readable from the back
-of the room. When a deck uses its own `template.pptx`, take the colors from that template instead and
-keep everything else here.
+Diagrams must sit well with the deck and be readable from the back of the room. The font is the
+deck's own: `reference.pptx` uses Calibri, which renders as Carlito (the same letter widths) where
+Calibri isn't installed. The palette is chosen to sit well with `reference.pptx`'s blue; it isn't
+taken from its theme. When a deck uses its own `template.pptx`, take the font and colors from that
+template instead, re-measure the canvas from its body placeholder, and keep everything else here.
 
 ## Canvas
 
@@ -18,7 +20,7 @@ A different shape still fits, but is scaled down to fit and leaves empty space.
 
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="660" viewBox="0 0 1600 660"
-     font-family="Noto Sans, Liberation Sans, sans-serif">
+     font-family="Calibri, Carlito, Noto Sans, Liberation Sans, sans-serif">
   <rect width="1600" height="660" fill="#FFFFFF"/>
   …
 </svg>

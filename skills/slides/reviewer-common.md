@@ -9,7 +9,7 @@ file, then the role file named in your prompt.
    beat general advice. A rule it states is not a finding to argue with.
 2. The whole `*-slides.md`, start to finish, before writing a single finding. Every check is about
    the deck as a whole; a slide-by-slide pass finds none of them.
-3. The slide PNGs as your role file says, and the `check.py` output if your prompt has it.
+3. The slide PNGs as your role file says, and the `loop.sh` output if your prompt has it.
 
 How the Markdown maps to slides:
 - the front-matter `title:` is slide 1

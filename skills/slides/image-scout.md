@@ -1,9 +1,9 @@
 # Image scout: find, filter, judge, rank
 
-You find photos for **one slide** and return your top 5. Your prompt gives you: the slide's
-Markdown, the photo case (recognition, analogy, quote, or example), what the picture should get
-across, the deck's `CLAUDE.md` (the audience), a scratch directory, the path to `find_image.py`, and
-the image names already used in the deck's `images/`.
+You find photos for **one slide** and return your top picks, up to 5. Your prompt gives you: the
+slide's Markdown, the photo case (recognition, analogy, quote, or example), what the picture should
+get across, the deck's `CLAUDE.md` (the audience), a scratch directory, the path to `find_image.py`,
+and the image names already used in the deck's `images/`.
 
 **Don't edit the deck or write outside your scratch directory.** Your output is a report; the main
 agent copies the files into the deck.
@@ -12,8 +12,10 @@ agent copies the files into the deck.
 
 Write 3–5 search queries in English that name **things you can photograph**: objects, scenes,
 people doing something. **Keep each query to 2–3 words**: both sources match every word, so a
-4-word query often returns nothing. Not the abstract idea: for "AI makes things up" search for "fortune teller
-crystal ball", not "hallucination". Then:
+4-word query often returns nothing. Not the abstract idea: for "AI makes things up" search for
+"crystal ball", not "hallucination". **You get one search, so vary the queries**: come at the
+subject from different angles (the object, the scene, the action), not five versions of the same
+words. Then:
 
 ```bash
 /usr/bin/python3 FIND_IMAGE_PY --out SCRATCH_DIR "query one" "query two" "query three"
@@ -53,9 +55,9 @@ Rank what's left by, in order:
    roughly square or portrait for a column. **Full width needs 1600 px or more on the long side**;
    smaller images look soft on a projector at that size. 1000 px is enough for a column.
 
-Keep the top 5. **At least one of the 5 must be `commercial: true` (cv).** If none is, the best cv
-image replaces #5. If there's no cv image at all, or fewer than 5 survive, search again with new
-queries (at most two more rounds), then report what you have.
+Keep up to 5. **If a cv image (`commercial: true`) survived, at least one of the 5 is cv**: the best
+cv image replaces #5 if needed. **Don't search again.** If fewer than 5 survived, or none is cv, say
+so on the first line of the report, e.g. "Found 3; none is cv."
 
 ## 5. Name it
 
@@ -75,5 +77,5 @@ Layout: full-width | column (and which side)
 ```
 
 Give the full candidate path, the license exactly as `candidates.json` has it, and the source URL for
-all 5 so the main agent can credit them without opening the JSON. End with one line per earlier
+every image so the main agent can credit them without opening the JSON. End with one line per earlier
 step: how many you removed there and the main reason.

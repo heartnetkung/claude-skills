@@ -14,11 +14,13 @@ report).
 """
 import glob
 import os
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
 import time
+import zipfile
 
 import uno
 from com.sun.star.beans import PropertyValue
@@ -107,6 +109,33 @@ def export_pngs(desktop, deck, out_dir):
     print(f"PNGs: {out_dir}/slide-*.png")
 
 
+# Free fonts with the same letter widths, which LibreOffice swaps in automatically.
+SAME_SIZE = {"Calibri": "Carlito", "Cambria": "Caladea", "Arial": "Liberation Sans",
+             "Times New Roman": "Liberation Serif", "Courier New": "Liberation Mono"}
+
+
+def font_warnings(deck):
+    """Warn when a theme font would be measured in a different-width substitute.
+    Overflow depends on letter widths, so the check would then be wrong for PowerPoint."""
+    with zipfile.ZipFile(deck) as z:
+        # Only themes a slide master uses; the notes master has its own theme, never on a slide.
+        rels = [n for n in z.namelist() if re.match(r"ppt/slideMasters/_rels/.*\.rels$", n)]
+        themes = {"ppt/theme/" + t for n in rels
+                  for t in re.findall(r'Target="\.\./theme/(theme\d+\.xml)"', z.read(n).decode())}
+        fonts = {f for n in themes
+                 for f in re.findall(r'<a:latin typeface="([^"+][^"]*)"', z.read(n).decode("utf-8", "replace"))}
+    out = []
+    for font in sorted(fonts):
+        got = subprocess.run(["fc-match", "-f", "%{family}", font],
+                             capture_output=True, text=True).stdout
+        ok = {font, SAME_SIZE.get(font)} & {f.strip() for f in got.split(",")}
+        if not ok:
+            hint = f"; install {SAME_SIZE[font]}" if font in SAME_SIZE else ""
+            out.append(f"warning: font {font} isn't installed, so overflow is measured in "
+                       f"{got.split(',')[0] or 'a fallback'} and may be wrong{hint}")
+    return out
+
+
 def main(argv):
     if len(argv) not in (1, 3) or (len(argv) == 3 and argv[1] != "--png"):
         sys.exit("usage: check.py DECK.pptx [--png OUT_DIR]")
@@ -129,6 +158,8 @@ def main(argv):
         except subprocess.TimeoutExpired:
             proc.kill()
         shutil.rmtree(profile, ignore_errors=True)
+    for w in font_warnings(deck):
+        print(w)
     for w in warnings:
         print(f"warning: {w}")
     for e in errors:

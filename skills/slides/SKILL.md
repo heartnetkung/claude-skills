@@ -34,7 +34,7 @@ to this file:
 | `CLAUDE.md` | the deck's own rules: audience, tone, numbering, banned words |
 | `reference.pptx` | frozen copy of `<skill-dir>/assets/reference.pptx`, so the deck builds even if the skill changes |
 | `template.pptx` | optional: a company or Google Slides template; wins over `reference.pptx` |
-| `images/` | `*.svg` sources and their rendered `*.png` |
+| `images/` | diagram sources and renders, photos, and `CREDITS.md` |
 
 **Read the deck folder's `CLAUDE.md` before editing a deck.** Its rules beat the general ones below.
 
@@ -91,6 +91,10 @@ nothing is listening, and otherwise closes and reopens only this deck's window.
 
 - `pandoc` on the `PATH`. If missing, install without sudo from the static release:
   `curl -L https://github.com/jgm/pandoc/releases/download/<v>/pandoc-<v>-linux-amd64.tar.gz | tar xz --strip-components 2 -C ~/.local/bin pandoc-<v>/bin/pandoc`
+- The template's fonts, or fonts with the same letter widths, or the overflow check measures the
+  wrong widths (`check.py` warns). For `reference.pptx` that's Calibri or **Carlito**: `sudo apt
+  install fonts-crosextra-carlito`, or without sudo, put the four `Carlito-*.ttf` files from
+  github.com/google/fonts (`ofl/carlito`) into `~/.local/share/fonts` and run `fc-cache -f`.
 - LibreOffice Impress with Python UNO (`/usr/bin/python3 -c "import uno"`), and `pdftocairo` (poppler-utils) for `--png`.
 - For `visuals.md`: Google Chrome or Chromium for diagrams (falls back to LibreOffice, which renders
-  fonts worse), and numpy (`/usr/bin/python3 -c "import numpy"`) for photo search.
+  fonts worse), and numpy and Pillow (`/usr/bin/python3 -c "import numpy, PIL"`) for photo search.

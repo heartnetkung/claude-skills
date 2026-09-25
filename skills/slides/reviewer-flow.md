@@ -28,7 +28,7 @@ existing picture already makes a slide's point).
     on this later" is fine, and a term merely used before it's defined is not a finding.
 
 The mind map checks what serves the goal. The links check order, which a tree can't show. Each
-finding cites its evidence, e.g. "slide 33 relies on `CLAUDE.md`, explained on slide 45". Then
+finding cites its evidence, e.g. "slide 33 relies on 'context window', explained on slide 45". Then
 judge the ends: a weak opening, or an ending that doesn't land the main message. If agenda times
 exist, check whether any section is too full for its time.
 

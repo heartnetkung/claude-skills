@@ -11,8 +11,8 @@ simplifying). You merge their reports, fix what's certain, and ask about the res
 ```
 
 `SCRATCH` is your scratchpad directory, or a new temporary directory if you have none. Keep the
-`check.py` output for the editor. It measures overflow the PNGs don't show, such as text 1 mm past
-its box, and lists the linter's limit warnings.
+full `loop.sh` output for the editor: the linter's limit warnings, and `check.py`'s overflow report,
+which measures what the PNGs don't show, such as text 1 mm past its box.
 
 ## 2. Start both reviewers in one message
 
@@ -25,7 +25,7 @@ Each prompt contains only:
     `<skill-dir>/visual-rules.md`
 - the deck: absolute paths to `NAME-slides.md`, the deck folder's `CLAUDE.md` (if it exists), and
   the PNG folder
-- editor only: the `check.py` output, pasted. The flow reviewer judges structure, not layout.
+- editor only: the `loop.sh` output, pasted. The flow reviewer judges structure, not layout.
 
 **Don't summarize a rubric into the prompt.** Naming the file is the whole mechanism. An agent that
 didn't read its rubric still returns a confident report about nothing.
@@ -45,7 +45,7 @@ didn't read its rubric still returns a confident report about nothing.
 
 ## 4. Fix what's certain
 
-You apply them; the reviewers never edit. Apply the certain fixes directly in `NAME-slides.md`. Keep the author's voice and vocabulary. Never
+Apply the certain fixes directly in `NAME-slides.md`. Keep the author's voice and vocabulary. Never
 add a fact the deck didn't already carry.
 
 ## 5. Report, then ask
