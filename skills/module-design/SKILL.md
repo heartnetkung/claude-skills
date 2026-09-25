@@ -13,7 +13,7 @@ description: How to design a new module before coding it, and how to retire its 
   separate pass. **Deleted when the module lands**, alongside the spec.
 
 **Default home for a durable fact is the code it is about** — call-site comment, test, docstring,
-`--help`. `contract.md` is the narrow exception; when in doubt it is not a clause.
+`--help`, or the commit message that made the change. `contract.md` is the narrow exception; when in doubt it is not a clause.
 
 **One-way citation:** the doomed files may cite the contract, never the reverse. A contract citing
 `spec.md §Foo` breaks when the spec is deleted.
@@ -39,4 +39,4 @@ has finished.
 
 The build docs are deleted here, but only after what could not be written in advance is captured —
 and that is the part that gets skipped when it is done from memory. **Read `merge.md` and follow
-its six steps.**
+its seven steps.**

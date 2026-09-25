@@ -7,11 +7,17 @@ is not done.* Worked example: `example-contract.md`, next to this file — read 
 not as a template; a different module earns a different subset of the kinds below.
 
 **Gate: name the consumer before writing a clause** — the module, file, and function that will
-read it. No named consumer, no clause; anything else is speculative plumbing in prose.
+read it. No named consumer, no clause; anything else is speculative plumbing in prose. The answer
+is not discarded once the gate passes: it is the clause's `Sites:` line below, which is what lets a
+later reader check the consumer is still there.
 
 **Closed list — seven kinds, nothing else.** Anything unmatched goes to the code, even when true,
 durable, and hard-won. Resist growing this list; the closure is what makes the gate work, and a
-candidate that cannot name its consumer is speculation however true it sounds:
+candidate that cannot name its consumer is speculation however true it sounds. Note what is *not*
+on it: why an alternative was rejected, and how the module came to be the way it is. Both are
+durable, which is what makes them feel contract-shaped; neither is a rule, and a contract that
+takes them on becomes a history log — one that argues, and that carries numbers someone now has to
+keep true.
 
 - **Invariants a caller depends on**, with the reason — "the returned map has one entry per input
   row; a failed row gets a stand-in, never a missing key," because a consumer indexes it by key
@@ -35,15 +41,50 @@ candidate that cannot name its consumer is speculation however true it sounds:
 **Goes to the code instead:**
 
 - What the code already states — layout, field tables, flag lists, import/layering rules enforced
-  by tooling, script walkthroughs. Delete rather than relocate.
+  by tooling, script walkthroughs. Delete rather than relocate. Recognise it by shape as well as by
+  category: an ASCII directory tree, a table of paths, of flags, of mounts, of environment
+  variables. Those earn their place in `spec.md` and `boundary.md` while you are drafting, and they
+  are deleted with those files once the thing they picture exists to be read instead.
 - Machine-checkable schema → the type definitions and validators.
 - Test *case lists* → the test file, as data. Never prose.
 - Why *this line* is what it is, including "don't 'fix' this" → a comment at that line. The most
   common mistake: rationale is durable, which makes it feel contract-shaped, but it belongs to a
   call site, not the boundary.
+- A rejected alternative, or how the module came to be this way → the commit message that made the
+  change, or a comment at the line when a later reader could undo it by accident. A contract states
+  the rule that holds now; the moment it argues for the rule it acquires a history to keep current,
+  and the figures that argument leans on go stale with nothing to catch them.
 
-**Each clause names its enforcing test, or admits it has none** (review-only is legitimate).
-**Cap ~150 lines.** Numbers with a shelf life get a date or a script that regenerates them.
+**Each clause names its enforcing test, or admits it has none** (review-only is legitimate), and
+**names its sites** — the code that clause binds — on a `Sites:` line beside `Tests:`:
+
+```
+Tests: `test_an_unopenable_submission_is_a_mismatch`.
+Sites: `interface/grading.py:compare`, `score/grade.py`.
+```
+
+A site is wherever someone could break the clause, which is not always Python: a Dockerfile, a
+prompt file, a data file all count. **Where the code that could break it and the consumer that
+would suffer are different code, name both, and say which is which** — an invariant is broken by
+its producer and depended on by its readers, and the two answer different questions later. The
+producer is what question 1 of `removal.md` greps; the consumer is what its question 5 checks has
+not left. List the dangerous ones, not every symbol the clause mentions — this is a grep target,
+not a second import graph. **`Sites: none` is an answer**, and a meaningful
+one: it says the fact has no home in code, which is what a contract is for, and it marks the clause
+as one a later pass must not "move somewhere better".
+
+The two lines divide the clause's prose as well as locating it. **The contract states the caller's
+assumption; the docstring at the site states the mechanism.** A clause that restates what its
+site's docstring already says is the most expensive duplication there is — it reads as courtesy
+from both ends, and it drifts from both ends.
+
+**Cap ~180 lines of prose**, counting the clauses only — `Tests:` and `Sites:` lines do not count
+toward it, because the cap protects the argument a reader follows and not the citations they grep.
+No measured number survives in a contract: not with a date beside it, not with
+a script named beside it. A figure your own run produced is a claim nothing keeps honest, and it
+decays in silence because nothing fails when it goes stale. The one exception is a constant you do
+not maintain and could not have found by reading the code — a vendor's cap, a retention window, a
+protocol limit. That is the rule itself, not a measurement of it.
 
 Encode test policy so violating it fails the build. Parametrize over the **closed set of cases**,
 not over the fixture collection — iterating fixtures can never detect a missing one:

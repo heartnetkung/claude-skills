@@ -1,6 +1,8 @@
 <!-- Worked example for the module-design skill: a snapshot of a real contract.md, kept
      frozen as a teaching artifact. Read it for calibration and voice, not as a template —
-     it exercises five of the seven kinds because that is what this module earned. -->
+     it exercises five of the seven kinds because that is what this module earned.
+     Frozen except for the `Sites:` lines, added when the skill began requiring them:
+     the clauses are the module's, the sites are read back off the prose around them. -->
 
 # mcpip.query_gen — contract
 
@@ -23,6 +25,9 @@ row count.
 
 Tests: `test_generate_writes_a_null_query_and_warns_when_the_reply_never_parses`,
 `test_generate_writes_a_null_query_and_warns_when_the_call_fails`.
+Sites: `QueryGen.generate`, in every arm — the stand-in is what keeps the map total.
+`Experiment.evaluate` (`interface/pipeline.py`) and `run_query_gen.write_inspection` are the two
+that would suffer.
 
 ## A returned query is well-typed, not necessarily valid
 
@@ -36,6 +41,8 @@ warning.
 
 Tests: `test_generate_keeps_the_best_effort_when_validation_fails_twice`,
 `test_generate_keeps_the_best_effort_when_the_retry_batch_fails`.
+Sites: `run_query_gen.report_invalid`, the one caller that calls
+`interface.validate.validate_query` for itself.
 
 ## Only `DatasetQuery.query` reaches the model
 
@@ -48,6 +55,8 @@ is the only rule here whose violation is invisible downstream: leaked ground tru
 *better* score, not as a failure.
 
 Test: `test_generate_shows_the_model_only_the_query`.
+Sites: the prompt assembly in `QueryGen.generate`, in every arm. Nothing downstream can hold this
+one — a leak reads as a better score.
 
 ## A row buys exactly one corrective retry
 
@@ -60,6 +69,7 @@ buy tokens rather than quality. The residue is therefore expected to be non-zero
 not as a reason to raise the retry count.
 
 Test: `test_generate_keeps_the_best_effort_when_validation_fails_twice`.
+Sites: the retry path in `QueryGen.generate`; `run_query_gen`, which prints the residue.
 
 ## Generation bills per row and is not reproducible
 
@@ -70,5 +80,8 @@ Three consequences for callers: scope a run before spending it — `run_query_ge
 synchronous run for this reason; persist the output and re-read it instead of regenerating, which
 is why `Experiment` splits the generation phases from `evaluate`; and never diff two runs
 expecting equality.
+
+Sites: `config.Settings` for the credential; `run_query_gen`, which refuses a full synchronous
+run, and `Experiment`, which splits the generation phases from `evaluate`.
 
 Review-only — no test asserts this.

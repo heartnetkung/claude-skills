@@ -31,8 +31,8 @@ skills/
   module-design/
     SKILL.md            entry point; routes to one phase file, never both
     design.md           phase 1 — contract, spec, boundary, the two reviewers
-    merge.md            phase 2 — six steps, ending in deleting the build docs
-    removal.md          cutting an over-length contract back under the cap
+    merge.md            phase 2 — seven steps, ending in deleting the build docs
+    removal.md          the pass run on every contract edit; whole file past ~180 lines
     reviewer-common.md  rules both review agents read first
     reviewer-simplification.md  reviewer 1's rubric
     reviewer-design.md  reviewer 2's rubric
