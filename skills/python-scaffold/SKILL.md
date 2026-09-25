@@ -51,10 +51,14 @@ Second call:
    ASK rule.
 6. **Rigor stance** — normal (default) or explicitly experimental. Default emits
    nothing; see the rule bank on why this is never inferred.
-7. **Slow-suite filing** — vendor `slow-pytest-maintenance`? Default yes when CI
-   was accepted above. It files a GitHub issue when the suite crosses 15s, so it
-   needs a repo with a `maintenance` label; without one `gh issue create` fails
-   and the skill is decoration.
+7. **Skills** — which shared skills to link into `.claude/skills/`? Multi-select
+   (`multiSelect: true`), one option per skill:
+   - `module-design` — default yes. The `CLAUDE.md` module rules route to it.
+   - `slow-pytest-maintenance` — default yes when CI was accepted above. It files
+     a GitHub issue when the suite crosses 15s, so it needs a repo with a
+     `maintenance` label; without one `gh issue create` fails and the skill is
+     decoration.
+   - `markdown-check` — default no.
 
 ## Step 2 — Layers, the part worth slowing down for
 
@@ -131,8 +135,7 @@ Create, substituting `{{PKG}}` `{{PROJECT}}` `{{PY}}` `{{PY_NODOT}}` (e.g. `3.13
 | `CLAUDE.md` | `assets/claude-md-rules.md` | assemble from bank |
 | `tach.toml` | Step 2 | generate |
 | `.github/workflows/checks.yml` | `assets/ci.yml` | frozen, if opted in |
-| `.claude/skills/module-design/` | `../module-design/` | vendor, see Step 5 |
-| `.claude/skills/slow-pytest-maintenance/` | `../slow-pytest-maintenance/` | vendor, if opted in |
+| `.claude/skills/<skill>/` | `../<skill>/` | symlink, each skill selected; see Step 5 |
 
 `claude-settings.json` keeps `uv.lock` out of context with a `PreToolUse` hook on
 `Read`, not a `permissions.deny` rule. `module-design`'s reviewer rules ask for the
@@ -195,32 +198,36 @@ a `.md` asset has to be formatter-clean like any other code.
 code yet. It passes; the warning goes away with the first real import. Do not
 chase it by editing source roots.
 
-## Step 5 — Vendor the shared skills
+## Step 5 — Link the shared skills
 
-Copy this plugin's `skills/module-design/` into the new project's
-`.claude/skills/module-design/`, unmodified. Same for
-`skills/slow-pytest-maintenance/` if the interview selected it.
+Symlink each skill selected in question 7 into the new project's
+`.claude/skills/`. The links are relative, so they survive moving or renaming the
+parent directory together with `claude-skills`:
 
-It is copied, not linked. Git stores a symlink as its target path, so a link to
-your home directory dangles in every clone and the skill silently disappears.
-The copy makes the project self-contained.
+```bash
+SKILLS=$(dirname "$(readlink -f ~/.claude/skills/python-scaffold)")
+mkdir -p .claude/skills
+ln -s "$(realpath --relative-to=.claude/skills "$SKILLS/module-design")" .claude/skills/module-design
+```
 
-**Do not stamp the copy with a "vendored from, edit upstream" header.** Both
-places are sources of truth: edit whichever you are sitting in and mirror the
-change to the other. A banner naming one direction was wrong in both — it told
-you to leave the project, and it went stale the first time the upstream copy
-gained a file the project's did not have.
+Repeat the `ln -s` line for each other selected skill. `readlink -f` resolves this
+skill's own link to the real `claude-skills/skills/` directory. If
+`~/.claude/skills/python-scaffold` does not exist, stop and ask the user where
+`claude-skills` is. Never guess a path.
 
-Improvements still do not flow backward on their own into already-scaffolded
-projects. That is the normal cost of a template, and it is cheaper than the
-alternative.
+Link, don't copy. `claude-skills` is the only copy of each skill, so a fix there
+reaches every project, and there is nothing to keep in sync.
+
+The cost: a committed link is broken in any clone that lacks `claude-skills` at
+the same relative path, and the skill silently disappears there. Say so in the
+hand-off if the interview chose the team git workflow.
 
 ## Step 6 — Hand off
 
 Show the layer diagram and the bootstrap commands, then point at
 `module-design` for the first module — it runs the whole design sequence before any code.
 
-If `slow-pytest-maintenance` was vendored, say that it needs a `maintenance`
+If `slow-pytest-maintenance` was linked, say that it needs a `maintenance`
 label on the repo (`gh label create maintenance`) — the scaffold cannot make one
 before a remote exists.
 

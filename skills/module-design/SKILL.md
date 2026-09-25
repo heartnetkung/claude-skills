@@ -23,9 +23,10 @@ description: How to design a new module before coding it, and how to retire its 
 The rest of this skill is in files next to this one, and the reviewers are spawned with their
 rubrics named by path. **Resolve the directory to an absolute path now** — an agent starts cold
 and cannot resolve "next to the skill you were spawned from", and neither can you when this skill
-is loaded from a plugin rather than a project copy, because the body arrives as text with no path
-attached. Glob `**/skills/module-design/SKILL.md`, project `.claude/skills/` first, then
-`~/.claude/plugins/`. **If it is not found, stop and tell the user** — never guess a path.
+arrives as text with no path attached. Check `.claude/skills/module-design/SKILL.md` in the project
+first, then `~/.claude/skills/module-design/SKILL.md` — directly, not by glob, because the skill
+directory is usually a symlink, which a glob may not follow. **If it is not found, stop and tell
+the user** — never guess a path.
 
 ---
 

@@ -38,11 +38,11 @@ Each earns its place by pairing with something installed:
 |---|---|
 | no speculative plumbing | `vulture` (`min_confidence = 80`) |
 | no roadmap comments | `vulture`, for the code the comment justifies |
-| cite contract.md, never a section number | vendored `module-design` skill |
+| cite contract.md, never a section number | linked `module-design` skill |
 | do not edit tach rules | `tach check` in pre-commit |
 | red-green TDD | `pytest` + coverage `branch = true` |
-| contract before spec | vendored `module-design` skill |
-| removal pass on every contract edit | vendored `module-design` skill (`removal.md`) |
+| contract before spec | linked `module-design` skill |
+| removal pass on every contract edit | linked `module-design` skill (`removal.md`) |
 | `/simplify` then review before commit | both are built-in Claude Code skills |
 
 The comment rules are the one pair no tool checks directly, and that is the
@@ -54,10 +54,10 @@ Deleting the sentence and keeping an unread field is the failure mode it names.
 
 Drop the tach rule if the user declined layers. Drop all three `module-design`
 lines — the contract.md citation rule, the spec sub-bullet, and the contract-edit
-rule — if the skill was not vendored. Otherwise a rule points at something that
+rule — if the skill was not linked. Otherwise a rule points at something that
 is not there, and the whole file starts reading as decoration.
 
-The contract-edit rule is the only thing that ever opens `removal.md`. Vendoring the
+The contract-edit rule is the only thing that ever opens `removal.md`. Linking the
 skill without it ships a file nothing routes to.
 
 The `/simplify` sub-bullet is not padding: without it the model reports the

@@ -1,6 +1,6 @@
 # claude-skills
 
-Personal Claude Code skills, packaged as one plugin.
+Personal Claude Code skills. Projects symlink the ones they want.
 
 | Skill | What it does |
 |---|---|
@@ -11,20 +11,33 @@ Personal Claude Code skills, packaged as one plugin.
 
 ## Install
 
+Symlink each skill a project wants into its `.claude/skills/`. Claude Code puts every
+visible skill's description into context and can trigger it, so link only the skills
+that apply. The commands below assume the project and `claude-skills` sit side by side:
+
 ```bash
-claude
-> /plugin marketplace add ~/Documents/claude-skills
-> /plugin install claude-skills@claude-skills
+mkdir -p .claude/skills
+ln -s ../../../claude-skills/skills/module-design           .claude/skills/module-design
+ln -s ../../../claude-skills/skills/slow-pytest-maintenance .claude/skills/slow-pytest-maintenance
+ln -s ../../../claude-skills/skills/markdown-check          .claude/skills/markdown-check
 ```
 
-Edits here are live — no re-vendoring needed for the skills themselves.
+`python-scaffold` runs before a project exists, so link it at user level instead:
+
+```bash
+mkdir -p ~/.claude/skills
+ln -s ~/Documents/claude-skills/skills/python-scaffold ~/.claude/skills/python-scaffold
+```
+
+Run `/skills` in the project to confirm the links are picked up. A committed link is
+broken for anyone who clones the project without `claude-skills` beside it. Gitignore
+`.claude/skills/` if that matters.
+
+Edits here are live: they reach every linked project immediately.
 
 ## Layout
 
 ```
-.claude-plugin/
-  marketplace.json      this repo as a marketplace
-  plugin.json           this repo as a plugin
 skills/
   python-scaffold/
     SKILL.md            the procedure
@@ -49,13 +62,12 @@ skills/
     SKILL.md            the five checks, what to fix vs. ask, the report format
 ```
 
-`module-design`, `slow-pytest-maintenance`, and `markdown-check` are copied into projects that
-want them without a plugin install. **Both copies are sources of truth** — edit whichever you are
-sitting in and mirror the change to the other. Neither carries a "vendored from" banner,
-because there is no one direction to point it.
+This repo is the only copy of each skill. Projects link to it and don't vendor it, so there is
+nothing to keep in sync.
 
 `slow-pytest-maintenance` assumes pytest, `uv`, `gh`, and a `maintenance` label in the
-repo; it hardcodes 15s. A project that wants a different threshold edits its own copy.
+repo; it hardcodes 15s. A symlinked copy is shared, so a project that needs a different
+threshold copies the skill in rather than linking it, and that copy is then its own.
 
 ## Assets: frozen vs. generated
 
@@ -70,12 +82,3 @@ and there is no guarantee a fresh scaffold passes its own checks.
 | `pyproject-tools.toml` | frozen | the `[tool.*]` half of pyproject transfers intact; `[project]` does not and is generated |
 | `claude-md-rules.md` | rule bank | some rules can't be universally true — see the file |
 | `tach.toml` | generated | layer names are the whole content, and they're per-project |
-
-## Backporting
-
-Nothing here reads from a live project. Improvements move by hand: change a
-scaffolded project, decide whether the change is project-agnostic, and if so
-edit `assets/` here.
-
-The test is whether the change would still be right in a project sharing none
-of the current one's dependencies.

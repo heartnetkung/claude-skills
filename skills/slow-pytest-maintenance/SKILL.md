@@ -8,8 +8,9 @@ description: Record a pytest suite that has grown too slow as a GitHub issue, th
 A pytest summary crossed 15s while you were doing something else. Record it and go back —
 do not fix or skip the test.
 
-Run `file-issue.sh`, next to this file — glob `**/skills/slow-pytest-maintenance/file-issue.sh`,
-project `.claude/skills/` first, then `~/.claude/plugins/`. Its directory is not knowable from
-this text: the body arrives with no path attached when the skill is loaded from a plugin.
+Run `file-issue.sh`, next to this file — `.claude/skills/slow-pytest-maintenance/file-issue.sh`
+in the project first, then `~/.claude/skills/slow-pytest-maintenance/file-issue.sh`. Check those
+paths directly rather than globbing: the skill directory is usually a symlink, which a glob may
+not follow.
 
     <resolved path>/file-issue.sh <total, e.g. 18.2s>
