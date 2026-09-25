@@ -7,6 +7,7 @@ Personal Claude Code skills, packaged as one plugin.
 | `python-scaffold` | Scaffolds a greenfield Python project — uv, `src/` layout, ruff, pyright strict, tach layers, deptry, vulture, 8-hook pre-commit gate |
 | `module-design` | Designs a module before coding it — `contract.md` (permanent) vs `spec.md`/`boundary.md` (deleted when the module lands), then two parallel review agents |
 | `slow-pytest-maintenance` | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
+| `markdown-check` | Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle |
 
 ## Install
 
@@ -44,10 +45,12 @@ skills/
   slow-pytest-maintenance/
     SKILL.md            the threshold and the stop rule
     file-issue.sh       the one issue it files, with client-side dedupe
+  markdown-check/
+    SKILL.md            the five checks, what to fix vs. ask, the report format
 ```
 
-`module-design` and `slow-pytest-maintenance` are copied into projects that want them
-without a plugin install. **Both copies are sources of truth** — edit whichever you are
+`module-design`, `slow-pytest-maintenance`, and `markdown-check` are copied into projects that
+want them without a plugin install. **Both copies are sources of truth** — edit whichever you are
 sitting in and mirror the change to the other. Neither carries a "vendored from" banner,
 because there is no one direction to point it.
 
