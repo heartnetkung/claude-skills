@@ -8,7 +8,7 @@ Personal Claude Code skills. Projects symlink the ones they want.
 | `module-design` | Designs a module before coding it — `contract.md` (permanent) vs `spec.md`/`boundary.md` (deleted when the module lands), then two parallel review agents |
 | `slow-pytest-maintenance` | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
 | `markdown-check` | Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle |
-| `slides` | Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change — outline → first draft, two parallel reviewers (editor, flow), SVG diagrams |
+| `slides` | Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change — outline → first draft, two parallel reviewers (editor, flow), SVG diagrams, photo scouts with license-tagged picks |
 
 ## Install
 
@@ -65,21 +65,26 @@ skills/
     SKILL.md            the five checks, what to fix vs. ask, the report format
   slides/
     SKILL.md            entry point: the build → check → reload loop; routes to one phase file
-    outline.md          phase — outline, approval, first full draft, then delete the outline
+    outline.md          phase — interview (2 rounds), outline, approval, first full draft, delete the outline
     review.md           phase — two reviewers in parallel, fix what's certain, ask the rest
-    visuals.md          phase — pick slides, draw SVG, render, look, place
+    visuals.md          phase — diagrams (draw SVG, render, look) and photos (scouts, top 5, place #1)
+    visual-rules.md     when a slide gets a diagram or a photo; read by visuals, the flow reviewer, outline
+    image-scout.md      the photo scout agent's rubric: search, drop blurred/incomplete, rank
     reviewer-common.md  rules both review agents read first
     reviewer-editor.md  reviewer 1's rubric: wording, audience, deck rules, layout, images
     reviewer-flow.md    reviewer 2's rubric: story, coherence, concision, stale refs, visuals
     svg-style.md        canvas sizes, text sizes, palette for diagrams
-    scripts/            build.sh (lint + pandoc), check.py (overflow + PNGs),
-                        reload.py (LibreOffice over a pipe), render.sh (SVG → PNG)
+    scripts/            loop.sh (build → check → reload in one call), build.sh (lint + pandoc),
+                        check.py (overflow + PNGs), reload.py (LibreOffice over a pipe),
+                        render.sh (SVG → PNG), find_image.py (Commons + Openverse search,
+                        cv/ci tags, blur filter)
     assets/             frozen: reference.pptx and starters copied into a new deck folder
 ```
 
-`slides` needs `pandoc`, LibreOffice with Python UNO, poppler-utils, and Chrome or Chromium for
-diagrams. The per-deck rules (audience, banned words, numbering) live in each deck folder's
-`CLAUDE.md`, not in the skill.
+`slides` needs `pandoc`, LibreOffice with Python UNO, poppler-utils, Chrome or Chromium for
+diagrams, and numpy for `find_image.py`. `find_image.py` sends this repo's URL as its
+User-Agent, because Wikimedia refuses requests without contact details. The per-deck rules
+(audience, banned words, numbering) live in each deck folder's `CLAUDE.md`, not in the skill.
 
 This repo is the only copy of each skill. Projects link to it and don't vendor it, so there is
 nothing to keep in sync.

@@ -1,6 +1,6 @@
 ---
 name: slides
-description: Build PowerPoint decks from a Markdown source with pandoc, reloading LibreOffice Impress after every change. Use when asked to make a presentation, slide deck, or .pptx; when editing a *-slides.md deck; when asked to review a deck (`/slides review`); or when asked to add diagrams or visuals to slides (`/slides visuals`).
+description: Build PowerPoint decks from a Markdown source with pandoc, reloading LibreOffice Impress after every change. Use when asked to make a presentation, slide deck, or .pptx; when editing a *-slides.md deck; when asked to review a deck (`/slides review`); or when asked to add diagrams, photos, or visuals to slides (`/slides visuals`).
 ---
 
 # Slides: Markdown in, PowerPoint out
@@ -12,15 +12,16 @@ is: edit the `.md` → build → check → reload LibreOffice.
 loaded (a symlink path is fine). Every path below written `<skill-dir>/…` means that directory, made
 absolute. The deck folder is where the deck's `*-slides.md` lives; pass it absolute too.
 
-## Route to one phase file
+## Route to one phase
 
-Read the argument and open **one** of these, next to this file:
+Read the argument, then read **all** of that phase's files **in one parallel turn**. They're next
+to this file:
 
-| Request | File |
+| Request | Read together |
 |---|---|
-| A new deck, or no `*-slides.md` exists yet | `outline.md`, which drafts the first full deck from an approved outline |
-| `review`, or "review / check / critique the slides" | `review.md` |
-| `visuals`, or "add diagrams / images / visuals" | `visuals.md` |
+| A new deck, or no `*-slides.md` exists yet | `outline.md` + `visual-rules.md` |
+| `review`, or "review / check / critique the slides". Only when the user asks: never start or suggest a review yourself, since it runs two agents. | `review.md` (the reviewers read their own rubrics) |
+| `visuals`, or "add diagrams / photos / images / visuals" | `visuals.md` + `visual-rules.md`, plus `svg-style.md` unless it's photos only |
 | Anything else: an edit, a rebuild, a fix | nothing more; the loop below is the whole job |
 
 ## Files in a deck folder
@@ -39,19 +40,23 @@ Read the argument and open **one** of these, next to this file:
 
 ## The loop, after every edit
 
+One command, not three:
+
 ```bash
-<skill-dir>/scripts/build.sh DECK_DIR/NAME-slides.md          # lint + pandoc → NAME.pptx
-/usr/bin/python3 <skill-dir>/scripts/check.py DECK_DIR/NAME.pptx   # overflow report
-/usr/bin/python3 <skill-dir>/scripts/reload.py DECK_DIR/NAME.pptx  # show it in LibreOffice
+<skill-dir>/scripts/loop.sh DECK_DIR/NAME-slides.md [--png DIR]
 ```
 
-- **Lint errors stop the build.** Fix the Markdown, don't work around the linter.
+It runs `build.sh` (lint + pandoc → `NAME.pptx`), then `check.py` (overflow report), then
+`reload.py` (show it in LibreOffice).
+
+- **Lint errors stop the build**, and nothing is reloaded. Fix the Markdown; don't work around the
+  linter.
 - **Check `error:` means content runs off the slide; `warning:` means text runs past its box**, which
   in practice is text touching the bottom edge. Fix both: cut words, split the slide, or move detail
   to speaker notes. To see a slide, add `--png DIR` (a scratch directory) and read `DIR/slide-NN.png`.
-- **Always run `reload.py` last**, even if you think nothing visible changed.
-- Use `/usr/bin/python3` for `check.py` and `reload.py`: the `uno` module comes from the system
-  LibreOffice package.
+- **A check error still reloads**, so the user sees the problem slide, but `loop.sh` exits 1.
+- To run a step on its own, use the script directly. Run `check.py` and `reload.py` with
+  `/usr/bin/python3`: the `uno` module comes from the system LibreOffice package.
 
 ### LibreOffice safety
 
@@ -79,12 +84,13 @@ nothing is listening, and otherwise closes and reopens only this deck's window.
 
 - About 6 bullets per slide, tables of 7 rows or fewer. The linter warns past both.
 - A slide says one thing. Detail the presenter needs goes in the notes, not on the slide.
-- When a slide explains a process, comparison, cycle, or timeline, it probably wants a visual
-  (`visuals.md`).
+- Which slides get a diagram or a photo is decided by `visual-rules.md`: diagrams wherever items
+  connect, photos only in four cases.
 
 ## Requirements
 
 - `pandoc` on the `PATH`. If missing, install without sudo from the static release:
   `curl -L https://github.com/jgm/pandoc/releases/download/<v>/pandoc-<v>-linux-amd64.tar.gz | tar xz --strip-components 2 -C ~/.local/bin pandoc-<v>/bin/pandoc`
 - LibreOffice Impress with Python UNO (`/usr/bin/python3 -c "import uno"`), and `pdftocairo` (poppler-utils) for `--png`.
-- For `visuals.md`: Google Chrome or Chromium (falls back to LibreOffice, which renders fonts worse).
+- For `visuals.md`: Google Chrome or Chromium for diagrams (falls back to LibreOffice, which renders
+  fonts worse), and numpy (`/usr/bin/python3 -c "import numpy"`) for photo search.

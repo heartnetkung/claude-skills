@@ -9,7 +9,7 @@ file, then the role file named in your prompt.
    beat general advice. A rule it states is not a finding to argue with.
 2. The whole `*-slides.md`, start to finish, before writing a single finding. Every check is about
    the deck as a whole; a slide-by-slide pass finds none of them.
-3. The `check.py` output in your prompt, and the slide PNGs as your role file says.
+3. The slide PNGs as your role file says, and the `check.py` output if your prompt has it.
 
 How the Markdown maps to slides:
 - the front-matter `title:` is slide 1
@@ -21,14 +21,17 @@ How the Markdown maps to slides:
 
 ## Rules
 
-- **Do not edit any file.** Your output is a report.
+- **Do not edit any file.** Your output is a report. The main agent that started you applies the
+  fixes: the certain ones directly, the rest after asking the user.
 - **Judge for the audience in the deck's `CLAUDE.md`**, not for yourself. If there's no `CLAUDE.md`,
   infer the audience from the deck and state what you inferred at the top of the report.
 - **Findings are uncapped and concrete.** Each one is a problem plus the exact fix. A finding without
   a fix ("this could be clearer") is not a finding.
 - **Don't manufacture findings.** If a check finds nothing, say "nothing found" under it.
-- **Say whether each fix is certain**: settled by the deck itself or the file tree (a typo, a broken
-  path, a number that disagrees with its neighbours), rather than a judgment call.
+- **Say whether each fix is certain.** A fix is certain when the deck or the file tree settles it: a
+  typo, a grammar slip, a broken image path whose target exists, a number that disagrees with its
+  neighbours (such as a section number). Anything that changes meaning, tone, or structure is a
+  judgment, however sure you are: every cut, merge, move, and rewrite.
 
 ## Report format
 
