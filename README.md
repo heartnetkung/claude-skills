@@ -75,12 +75,9 @@ skills/
 refuses requests without contact details. The per-deck rules (audience, banned words, numbering)
 live in each deck folder's `CLAUDE.md`, not in the skill.
 
-This repo is the only copy of each skill. Projects link to it and don't vendor it, so there is
-nothing to keep in sync.
-
 `slow-pytest-maintenance` assumes pytest, `uv`, `gh`, and a `maintenance` label in the
-repo; it hardcodes 15s. A symlinked copy is shared, so a project that needs a different
-threshold copies the skill in rather than linking it, and that copy is then its own.
+repo; it hardcodes 15s. For a different threshold, copy the skill into the project's
+`.claude/skills/` and edit it there.
 
 ## Assets: frozen vs. generated
 
