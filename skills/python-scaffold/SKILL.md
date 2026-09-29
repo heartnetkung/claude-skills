@@ -51,7 +51,7 @@ Second call:
    ASK rule.
 6. **Rigor stance** — normal (default) or explicitly experimental. Default emits
    nothing; see the rule bank on why this is never inferred.
-7. **Skills** — which shared skills to link into `.claude/skills/`? Multi-select
+7. **Skills** — which shared skills to enable in this project? Multi-select
    (`multiSelect: true`), one option per skill:
    - `module-design` — default yes. The `CLAUDE.md` module rules route to it.
    - `slow-pytest-maintenance` — default yes when CI was accepted above. It files
@@ -135,7 +135,7 @@ Create, substituting `{{PKG}}` `{{PROJECT}}` `{{PY}}` `{{PY_NODOT}}` (e.g. `3.13
 | `CLAUDE.md` | `assets/claude-md-rules.md` | assemble from bank |
 | `tach.toml` | Step 2 | generate |
 | `.github/workflows/checks.yml` | `assets/ci.yml` | frozen, if opted in |
-| `.claude/skills/<skill>/` | `../<skill>/` | symlink, each skill selected; see Step 5 |
+| `.claude/skills/<skill>/` or `.claude/settings.json` | each skill selected | symlink or project plugin; see Step 5 |
 
 `claude-settings.json` keeps `uv.lock` out of context with a `PreToolUse` hook on
 `Read`, not a `permissions.deny` rule. `module-design`'s reviewer rules ask for the
@@ -198,22 +198,40 @@ a `.md` asset has to be formatter-clean like any other code.
 code yet. It passes; the warning goes away with the first real import. Do not
 chase it by editing source roots.
 
-## Step 5 — Link the shared skills
+## Step 5 — Enable the shared skills
 
-Symlink each skill selected in question 7 into the new project's
-`.claude/skills/`. The links are relative, so they survive moving or renaming the
-parent directory together with `claude-skills`:
+How depends on where this skill itself was loaded from: the "Base directory for
+this skill" that Claude Code printed when it loaded. **If there is no such line,
+stop and ask the user where `claude-skills` is.** Never guess a path.
+
+**Installed as a plugin** (the base directory contains `/plugins/cache/`):
+enable each skill selected in question 7 as a project-scope plugin. This writes
+`extraKnownMarketplaces` and `enabledPlugins` into `.claude/settings.json` and
+keeps the frozen hook and permissions already there:
 
 ```bash
-SKILLS=$(dirname "$(readlink -f ~/.claude/skills/python-scaffold)")
+claude plugin marketplace add heartnetkung/claude-skills --scope project
+claude plugin install module-design@heartnetkung-skills --scope project
+```
+
+Repeat the `install` line for each other selected skill. Never symlink into the
+plugin cache: its folder is named after a commit, and an update replaces it.
+Because the settings file is committed, a teammate who opens the project is
+offered the same plugins; nothing depends on their disk layout.
+
+**A `claude-skills` clone** (any other base directory): symlink each selected
+skill into `.claude/skills/`. The links are relative, so they survive moving or
+renaming the parent directory together with `claude-skills`:
+
+```bash
+SKILLS=$(dirname "$(readlink -f "<skill-dir>")")
 mkdir -p .claude/skills
 ln -s "$(realpath --relative-to=.claude/skills "$SKILLS/module-design")" .claude/skills/module-design
 ```
 
-Repeat the `ln -s` line for each other selected skill. `readlink -f` resolves this
-skill's own link to the real `claude-skills/skills/` directory. If
-`~/.claude/skills/python-scaffold` does not exist, stop and ask the user where
-`claude-skills` is. Never guess a path.
+Repeat the `ln -s` line for each other selected skill. `readlink -f` resolves the
+base directory to the real `claude-skills/skills/` directory, even when it was
+loaded through a symlink.
 
 Link, don't copy. `claude-skills` is the only copy of each skill, so a fix there
 reaches every project, and there is nothing to keep in sync.
@@ -227,7 +245,7 @@ hand-off if the interview chose the team git workflow.
 Show the layer diagram and the bootstrap commands, then point at
 `module-design` for the first module — it runs the whole design sequence before any code.
 
-If `slow-pytest-maintenance` was linked, say that it needs a `maintenance`
+If `slow-pytest-maintenance` was enabled, say that it needs a `maintenance`
 label on the repo (`gh label create maintenance`) — the scaffold cannot make one
 before a remote exists.
 
