@@ -35,12 +35,14 @@ opinionated way, and every rule carries the reasoning behind it.
 
 ### python-scaffold
 - **Precondition:** new repos only.
-- **Benefit:** exhaustive verification for an agentic repo, with proven tools.
+- **Benefit:** exhaustive verification for an agentic repo, with proven tools; code
+  architecture deterministically enforced.
 - **Tradeoff:** highly opinionated.
 
 ### module-design
 - **Precondition:** tough modules; spec-driven development.
-- **Benefit:** better design, maintainability and simplicity, including simpler requirements.
+- **Benefit:** better module design, maintainability, code reuse and simplicity, including a
+  requirement simplification process.
 - **Tradeoff:** more process, so slower; opinionated; some Markdown docs persist in the code.
 
 ### slow-pytest-maintenance
