@@ -1,6 +1,6 @@
 # claude-skills
 
-Claude Code skills, installable one at a time as plugins.
+An opinionated, battle-tested Claude Code workflow, shared for the like-minded.
 
 | Skill | What it does |
 |---|---|
