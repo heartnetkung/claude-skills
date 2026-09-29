@@ -23,10 +23,11 @@ a user. Rules that cannot be universally true must be chosen out loud.
 - Do not edit tach rules. If not editing the rules introduce significant boilerplate, stop and ask user.
 - Use red-green TDD.
 - Prioritize code reuse. Refactor existing shared code to support new use case if need be.
+- In git checked-in code, favor small well-maintained library over adhoc code (e.g. csv parsing).
 - Always draft spec or show plan to the user prior to coding, so that user can confirm. Spec is for large implementation and plan is for the small. Both should include key logic of what it is doing and in which file/module.
   - For a new module under `src/{{PKG}}/`, invoke the `module-design` skill first — it governs the whole pre-code sequence (`contract.md`, `spec.md`, `boundary.md`, then two review agents) and the build docs' deletion at merge.
 - Editing a `contract.md`: read the `module-design` skill's `removal.md` first and make the pass it describes over the clauses you touched — every time, not on a threshold. Most of what bloats a contract is added by changes that never load the skill, so a trigger those changes cannot miss is the only one that works. Once the file's prose passes ~180 lines — clauses only, not the `Tests:`/`Sites:` lines — that pass covers the whole file instead.
-- When you ask the user to decide something, always provide context and a few choices for user to choose.
+- When you ask the user to decide something, always provide context and a few choices for user to choose. Label plain-text choices (a,b,c,...); AskUserQuestion options stay unlabeled.
 - Before committing a non-trivial change under `src/{{PKG}}/`: run `/simplify`, then code review, then commit (before precommit hook fires).
   - Never ask the user to type `/code-review`. Invoke it yourself from the repo root as a background subprocess: `claude -p "/code-review" --allowedTools "Read Grep Glob Bash(git *)"`. It runs in a fresh session, reads the working tree and this file, and prints findings to stdout — relay them. Expect minutes on a large diff.
 - extensively log important information across branches execution flow. If something goes wrong, this information will be given to LLM to figure out what's wrong.
