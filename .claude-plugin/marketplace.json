@@ -4,7 +4,7 @@
     "name": "heartnetkung"
   },
   "metadata": {
-    "description": "Claude Code skills for Python projects, module design, markdown editing, and slide decks",
+    "description": "Claude Code skills for Python projects, module design, markdown editing, slide decks, and UI prototypes",
     "version": "1.0.0"
   },
   "plugins": [
@@ -42,6 +42,13 @@
       "source": "./",
       "strict": false,
       "skills": ["./skills/slides"]
+    },
+    {
+      "name": "vibe-prototype",
+      "description": "Builds a throwaway, locally-running UI prototype on realistic dummy data to decide what to build, then hands it off as a spec with screenshots. Needs Node and Chrome/Chromium",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/vibe-prototype"]
     }
   ]
 }

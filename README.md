@@ -9,6 +9,7 @@ Claude Code skills, installable one at a time as plugins.
 | `slow-pytest-maintenance` | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
 | `markdown-check` | Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle |
 | `slides` | Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change — outline → first draft, two parallel reviewers (editor, flow), SVG diagrams, photo scouts with license-tagged picks |
+| `vibe-prototype` | Builds a throwaway, locally-running UI prototype on realistic dummy data to decide what to build, then hands it off as a spec with screenshots |
 
 ## Install
 
@@ -67,6 +68,9 @@ skills/
                         render.sh (SVG → PNG), find_image.py (Commons + Openverse search,
                         cv/ci tags, blur filter)
     assets/             frozen: reference.pptx and starters copied into a new deck folder
+  vibe-prototype/
+    SKILL.md            the loop: clarify context → scaffold → state panel → build/screenshot/look → wording → handoff
+    scripts/shot.sh     headless-Chrome screenshot of one prototype state
 ```
 
 `slides` needs `pandoc`, LibreOffice with Python UNO, poppler-utils, the Carlito font (for
@@ -74,6 +78,8 @@ skills/
 `find_image.py`. `find_image.py` sends this repo's URL as its User-Agent, because Wikimedia
 refuses requests without contact details. The per-deck rules (audience, banned words, numbering)
 live in each deck folder's `CLAUDE.md`, not in the skill.
+
+`vibe-prototype` needs Node/npm and Chrome or Chromium (for `shot.sh`).
 
 `slow-pytest-maintenance` assumes pytest, `uv`, `gh`, and a `maintenance` label in the
 repo; it hardcodes 15s. For a different threshold, copy the skill into the project's
