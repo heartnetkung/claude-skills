@@ -55,9 +55,8 @@ Second call:
    (`multiSelect: true`), one option per skill:
    - `module-design` — default yes. The `CLAUDE.md` module rules route to it.
    - `slow-pytest-maintenance` — default yes when CI was accepted above. It files
-     a GitHub issue when the suite crosses 15s, so it needs a repo with a
-     `maintenance` label; without one `gh issue create` fails and the skill is
-     decoration.
+     a GitHub issue when the suite crosses 15s, so it needs a GitHub remote;
+     without one `gh issue create` fails and the skill is decoration.
    - `markdown-check` — default no.
 
 ## Step 2 — Layers, the part worth slowing down for
@@ -245,9 +244,8 @@ hand-off if the interview chose the team git workflow.
 Show the layer diagram and the bootstrap commands, then point at
 `module-design` for the first module — it runs the whole design sequence before any code.
 
-If `slow-pytest-maintenance` was enabled, say that it needs a `maintenance`
-label on the repo (`gh label create maintenance`) — the scaffold cannot make one
-before a remote exists.
+If `slow-pytest-maintenance` was enabled, say that it files nothing until the
+repo has a GitHub remote. It creates its own `maintenance` label on first use.
 
 ---
 

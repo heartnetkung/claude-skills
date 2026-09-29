@@ -18,6 +18,11 @@ existing=$(gh issue list --state open --label maintenance --json url,title \
 	exit 0
 }
 
+# The label must exist before an issue can carry it. No --force: that would reset the colour and
+# description of a label the user already has. Errors are dropped because the create below
+# reports any real problem (no auth, no remote) on its own.
+gh label create maintenance --description "Upkeep: slow tests, tooling" >/dev/null 2>&1 || true
+
 gh issue create --label maintenance \
 	--title "pytest runtime: $total exceeds the 15s threshold" \
 	--body "Observed mid-task. Run \`uv run pytest --durations=15\` for the breakdown."

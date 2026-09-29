@@ -4,12 +4,12 @@ Claude Code skills, installable one at a time as plugins.
 
 | Skill | What it does |
 |---|---|
-| `python-scaffold` | Scaffolds a greenfield Python project — uv, `src/` layout, ruff, pyright strict, tach layers, deptry, vulture, 8-hook pre-commit gate |
-| `module-design` | Designs a module before coding it — `contract.md` (permanent) vs `spec.md`/`boundary.md` (deleted when the module lands), then two parallel review agents |
-| `slow-pytest-maintenance` | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
-| `markdown-check` | Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle |
-| `slides` | Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change — outline → first draft, two parallel reviewers (editor, flow), SVG diagrams, photo scouts with license-tagged picks |
-| `vibe-prototype` | Builds a throwaway, locally-running UI prototype on realistic dummy data to decide what to build, then hands it off as a spec with screenshots |
+| [`python-scaffold`](#python-scaffold) | Scaffolds a greenfield Python project — uv, `src/` layout, ruff, pyright strict, tach layers, deptry, vulture, 8-hook pre-commit gate |
+| [`module-design`](#module-design) | Designs a module before coding it — `contract.md` (permanent) vs `spec.md`/`boundary.md` (deleted when the module lands), then two parallel review agents |
+| [`slow-pytest-maintenance`](#slow-pytest-maintenance) | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
+| [`markdown-check`](#markdown-check) | Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle |
+| [`slides`](#slides) | Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change — outline → first draft, two parallel reviewers (editor, flow), SVG diagrams, photo scouts with license-tagged picks |
+| [`vibe-prototype`](#vibe-prototype) | Builds a throwaway, locally-running UI prototype on realistic dummy data to decide what to build, then hands it off as a spec with screenshots |
 
 ## Install
 
@@ -26,6 +26,43 @@ claude plugin install slides@heartnetkung-skills
 git clone https://github.com/heartnetkung/claude-skills.git ~/claude-skills
 ln -s ~/claude-skills/skills/slides ~/.claude/skills/slides
 ```
+
+## Benefits and tradeoffs
+
+Each skill encodes a workflow I run, with proven usage and lessons learned. Some of them have
+preconditions that assume a particular work style or context. Some problems are solved in an
+opinionated way, and every rule carries the reasoning behind it.
+
+### python-scaffold
+- **Precondition:** new repos only.
+- **Benefit:** exhaustive verification for an agentic repo, with proven tools.
+- **Tradeoff:** highly opinionated.
+
+### module-design
+- **Precondition:** tough modules; spec-driven development.
+- **Benefit:** better design, maintainability and simplicity, including simpler requirements.
+- **Tradeoff:** more process, so slower; opinionated; some Markdown docs persist in the code.
+
+### slow-pytest-maintenance
+- **Precondition:** pytest.
+- **Benefit:** flags a pytest suite that passes 15s, without derailing the current task.
+- **Tradeoff:** more backlog to handle.
+
+### markdown-check
+- **Benefit:** improves the coherence, concision and correctness of any Markdown.
+- **Tradeoff:** none.
+
+### slides
+- **Precondition:** LibreOffice.
+- **Benefit:** faster iteration: write in Markdown, convert to .pptx deterministically;
+  diagrams drawn and photos found automatically.
+- **Tradeoff:** limited positioning control (pandoc); styling needs fixing afterwards.
+
+### vibe-prototype
+- **Precondition:** new requirements only.
+- **Benefit:** speeds up iteration on complex UI requirements; the spec includes e2e tests
+  and verification.
+- **Tradeoff:** none.
 
 ## Layout
 
@@ -81,8 +118,8 @@ live in each deck folder's `CLAUDE.md`, not in the skill.
 
 `vibe-prototype` needs Node/npm and Chrome or Chromium (for `shot.sh`).
 
-`slow-pytest-maintenance` assumes pytest, `uv`, `gh`, and a `maintenance` label in the
-repo; it hardcodes 15s. For a different threshold, copy the skill into the project's
+`slow-pytest-maintenance` assumes pytest, `uv`, and `gh` with a GitHub remote; it creates its
+`maintenance` label on first use and hardcodes 15s. For a different threshold, copy the skill into the project's
 `.claude/skills/` and edit it there.
 
 ## Assets: frozen vs. generated
