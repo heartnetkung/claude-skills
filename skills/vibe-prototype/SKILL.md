@@ -104,14 +104,12 @@ Also check every time: labels overlapping in charts, dropdown values that aren't
 - **Point out knock-on effects** of their decision (a target that stops making sense, a filter that becomes redundant, two pages that now overlap), then let them decide.
 - **Removing is a feature.** When something is dropped, remove it fully — UI, state, handlers, CSS, dummy data, stale tips — and re-check other pages for references. Offer a dead-code sweep when things settle.
 
-UI conventions (defaults, not laws):
+UI conventions (defaults, not laws). The prototype becomes a new product that people have to learn, and if the learning curve is too steep the project fails. So start simple; customization comes later, once users ask for it:
 - One concept per card or tile group; don't mix unrelated stats.
 - No duplicated information on a page — if two widgets say the same number, drop one.
-- Lists newest-first (reverse chronological); left-to-right timelines stay chronological.
-- Progress/targets are local to the page (and to the selected scope, e.g. run) — don't show them in global navigation.
-- Look-only pages (dashboards) get no tips and no targets; action pages get short tips and a target.
+- Order a list by how the user will navigate it. If they're most likely to act on the latest item, put it first (reverse chronological). Left-to-right timelines stay chronological.
 - Don't put controls next to page headings; put scope pickers inside the card they scope.
-- Prefer one-trace/one-item deep views plus one big-picture view over several overlapping list views.
+- Prefer one deep view per item plus one big-picture view over several overlapping list views.
 
 ## 6. Wording
 
