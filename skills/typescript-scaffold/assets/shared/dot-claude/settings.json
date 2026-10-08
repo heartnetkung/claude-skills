@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm check:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm depcruise:*)",
+      "Bash(pnpm knip:*)",
+      "Bash(pnpm e2e:*)",
+      "Bash(pnpm exec biome:*)",
+      "Bash(pnpm exec vitest:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm add:*)",
+      "Bash(claude -p:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -q \"\\\"file_path\\\" *: *\\\"[^\\\"]*pnpm-lock\\.yaml\\\"\" && { echo \"pnpm-lock.yaml is large; grep it instead of reading it whole\" >&2; exit 2; }; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}

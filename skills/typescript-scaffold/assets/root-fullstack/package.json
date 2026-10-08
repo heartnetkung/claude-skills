@@ -1,0 +1,30 @@
+{
+  "name": "{{PROJECT}}",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.8.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "prepare": "lefthook install",
+    "dev": "pnpm -r --parallel dev",
+    "check": "lefthook run pre-commit --all-files",
+    "lint": "biome check .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run --coverage",
+    "depcruise": "depcruise apps packages",
+    "knip": "knip",
+    "e2e": "pnpm --filter @{{SCOPE}}/e2e test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.14",
+    "@types/node": "^26.6.3",
+    "@vitest/coverage-v8": "^5.0.2",
+    "dependency-cruiser": "^18.4.0",
+    "knip": "^6.38.0",
+    "lefthook": "^2.1.14",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.2"
+  }
+}

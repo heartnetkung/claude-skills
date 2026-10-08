@@ -5,6 +5,7 @@ An opinionated, battle-tested Claude Code workflow, shared for the like-minded.
 | Skill | What it does |
 |---|---|
 | [`python-scaffold`](#python-scaffold) | Scaffolds a greenfield Python project — uv, `src/` layout, ruff, pyright strict, tach layers, deptry, vulture, 8-hook pre-commit gate |
+| [`typescript-scaffold`](#typescript-scaffold) | Scaffolds a greenfield TypeScript project in one of four scopes (fullstack, back, front, script) — pnpm, Biome, tsc strict, Vitest, dependency-cruiser layers, knip, 5-job lefthook gate |
 | [`module-design`](#module-design) | Designs a module before coding it — `contract.md` (permanent) vs `spec.md`/`boundary.md` (deleted when the module lands), then two parallel review agents |
 | [`slow-pytest-maintenance`](#slow-pytest-maintenance) | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
 | [`markdown-check`](#markdown-check) | Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle |
@@ -38,6 +39,14 @@ opinionated way, and every rule carries the reasoning behind it.
 - **Benefit:** exhaustive verification for an agentic repo, with proven tools; code
   architecture deterministically enforced.
 - **Tradeoff:** highly opinionated.
+
+### typescript-scaffold
+- **Precondition:** new repos only; Node 24 and pnpm.
+- **Benefit:** the same guarantees as `python-scaffold` for TypeScript, plus a working slice
+  (Hono API → typed client → React page → Playwright spec) so every check has something real
+  to pass on the first run. Extra packages can be added at scaffold time or later, each with
+  its place in the import rules.
+- **Tradeoff:** highly opinionated, and it picks frameworks, not only tooling. No database.
 
 ### module-design
 - **Precondition:** tough modules; spec-driven development.
@@ -73,6 +82,11 @@ skills/
   python-scaffold/
     SKILL.md            the procedure
     assets/             files copied into scaffolded projects
+  typescript-scaffold/
+    SKILL.md            the procedure
+    scaffold.sh         copies the frozen assets for one scope, or adds one package to an
+                        existing project; refuses to overwrite
+    assets/             files copied into scaffolded projects, one directory per part
   module-design/
     SKILL.md            entry point; routes to one phase file, never both
     design.md           phase 1 — contract, spec, boundary, the two reviewers
@@ -118,6 +132,10 @@ skills/
 refuses requests without contact details. The per-deck rules (audience, banned words, numbering)
 live in each deck folder's `CLAUDE.md`, not in the skill.
 
+`typescript-scaffold` needs Node 24, pnpm (through corepack), and Chromium through Playwright for
+the fullstack and front scopes. Its Playwright suite is deliberately outside the commit hook and
+CI; it runs on demand.
+
 `vibe-prototype` needs Node/npm and Chrome or Chromium (for `shot.sh`).
 
 `slow-pytest-maintenance` assumes pytest, `uv`, and `gh` with a GitHub remote; it creates its
@@ -137,3 +155,8 @@ and there is no guarantee a fresh scaffold passes its own checks.
 | `pyproject-tools.toml` | frozen | the `[tool.*]` half of pyproject transfers intact; `[project]` does not and is generated |
 | `claude-md-rules.md` | rule bank | some rules can't be universally true — see the file |
 | `tach.toml` | generated | layer names are the whole content, and they're per-project |
+
+`typescript-scaffold/assets/` is frozen almost entirely, because it ships a working slice and
+not only config: `scaffold.sh` copies it and substitutes the project name and npm scope. Only
+`CLAUDE.md` (the same rule bank), the script scope's layer rules, and the rule for an extra
+package that one app must not import are generated.

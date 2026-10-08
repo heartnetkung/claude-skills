@@ -4,7 +4,7 @@
     "name": "heartnetkung"
   },
   "metadata": {
-    "description": "Claude Code skills for Python projects, module design, markdown editing, slide decks, and UI prototypes",
+    "description": "Claude Code skills for Python and TypeScript projects, module design, markdown editing, slide decks, and UI prototypes",
     "version": "1.0.0"
   },
   "plugins": [
@@ -14,6 +14,13 @@
       "source": "./",
       "strict": false,
       "skills": ["./skills/python-scaffold"]
+    },
+    {
+      "name": "typescript-scaffold",
+      "description": "Scaffolds a greenfield TypeScript project (fullstack, back, front or script): pnpm, Biome, tsc strict, Vitest, dependency-cruiser layers, knip, 5-job lefthook gate. Needs Node 24 and pnpm",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/typescript-scaffold"]
     },
     {
       "name": "module-design",

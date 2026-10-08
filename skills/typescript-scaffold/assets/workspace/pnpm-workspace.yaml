@@ -1,0 +1,13 @@
+packages:
+  - apps/*
+  - packages/*
+  - e2e
+allowBuilds:
+  esbuild: true
+  lefthook: false
+# dependency-cruiser parses .ts with the TypeScript JS API, which TypeScript 7 (native) no
+# longer ships. Give it a private TypeScript 6; the project itself type-checks with 7.
+packageExtensions:
+  dependency-cruiser:
+    dependencies:
+      typescript: ^6

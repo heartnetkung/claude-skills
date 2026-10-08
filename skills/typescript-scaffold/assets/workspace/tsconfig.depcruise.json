@@ -1,0 +1,9 @@
+{
+  "//": "Only for dependency-cruiser: resolves web's @/ alias from the repo root.",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./apps/web/src/*"]
+    }
+  },
+  "include": ["apps"]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@{{SCOPE}}/e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "typecheck": "tsc"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

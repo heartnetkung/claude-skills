@@ -1,0 +1,8 @@
+{
+  "editor.defaultFormatter": "biomejs.biome",
+  "files.exclude": {
+    "**/coverage": true,
+    "**/dist": true,
+    "**/.vscode": true
+  }
+}
