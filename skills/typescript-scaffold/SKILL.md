@@ -61,8 +61,9 @@ First call:
    Lowercase, hyphens allowed.
 3. **CI** — add `.github/workflows/checks.yml`? Default yes. It runs
    `pnpm check`, the same thing the commit hook runs.
-4. **Git workflow** — solo (default) or team. Selects a `claude-md-rules.md`
-   ASK rule.
+4. **GitHub repo** — is it created and set as `origin`? If not, ask the user to
+   create it now (`gh repo create`), or to say the project will not be on GitHub.
+   Step 4 reads the answer.
 
 Second call:
 
@@ -74,6 +75,7 @@ Second call:
 7. **Skills** — which shared skills to enable in this project? Multi-select
    (`multiSelect: true`), one option per skill:
    - `module-design` — default yes. The `CLAUDE.md` module rules route to it.
+   - `review-pr` — default yes. The `CLAUDE.md` git rule routes to it.
    - `markdown-check` — default no.
 8. For `fullstack`, `back`, `front` only: **Extra packages** — anything that
    should be its own package beside the apps, such as a rendering engine or a
@@ -261,6 +263,18 @@ git add -A
 pnpm check
 ```
 
+**If `origin` is on GitHub, make squash the only way to merge a PR:**
+
+```bash
+gh api -X PATCH repos/{owner}/{repo} \
+  -F allow_squash_merge=true -F allow_merge_commit=false -F allow_rebase_merge=false
+```
+
+`review-pr` commits screenshots to the PR branch and deletes them in its last
+commit; only a squash keeps them out of `main`'s history. `gh` fills in
+`{owner}/{repo}` from the remote. With no GitHub remote, skip this and say so in
+one line.
+
 **`git add -A` is not optional.** `pnpm check` runs lefthook with
 `--all-files`, which means every *tracked* file. With nothing tracked, every
 job reports "skip" and the command exits 0 — a pass that checked nothing.
@@ -335,12 +349,12 @@ loaded through a symlink.
 Link, don't copy. `claude-skills` is the only copy of each skill, so a fix there
 reaches every project, and there is nothing to keep in sync.
 
-The cost: a committed link is broken in any clone that lacks `claude-skills` at
-the same relative path, and the skill silently disappears there. Say so in the
-hand-off if the interview chose the team git workflow.
+The scaffolded `.gitignore` ignores `.claude/skills/`: a link only resolves where
+`claude-skills` sits at the same relative path. The cost: a fresh clone has no
+skills until the links are made again. Say so in the hand-off.
 
-Run `pnpm check` once more after this step: the links and the settings change
-are new tracked files.
+After a plugin install, run `pnpm check` once more: `.claude/settings.json` is
+tracked and has changed.
 
 ## Step 6 — Hand off
 

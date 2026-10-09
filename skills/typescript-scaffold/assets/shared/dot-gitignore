@@ -16,3 +16,6 @@ playwright-report/
 
 # TanStack router generator scratch files
 .tanstack/
+
+# Skills symlinked from a local claude-skills clone
+.claude/skills/

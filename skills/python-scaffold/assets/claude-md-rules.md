@@ -31,6 +31,7 @@ a user. Rules that cannot be universally true must be chosen out loud.
 - Before committing a non-trivial change under `src/{{PKG}}/`: run `/simplify`, then code review, then commit (before precommit hook fires).
   - Never ask the user to type `/code-review`. Invoke it yourself from the repo root as a background subprocess: `claude -p "/code-review" --allowedTools "Read Grep Glob Bash(git *)"`. It runs in a fresh session, reads the working tree and this file, and prints findings to stdout — relay them. Expect minutes on a large diff.
 - extensively log important information across branches execution flow. If something goes wrong, this information will be given to LLM to figure out what's wrong.
+- Commit and push to main. For ticket work, branch and open a PR with the `review-pr` skill instead.
 ```
 
 Each earns its place by pairing with something installed:
@@ -45,6 +46,7 @@ Each earns its place by pairing with something installed:
 | contract before spec | linked `module-design` skill |
 | removal pass on every contract edit | linked `module-design` skill (`removal.md`) |
 | `/simplify` then review before commit | both are built-in Claude Code skills |
+| PR for ticket work | linked `review-pr` skill |
 
 The comment rules are the one pair no tool checks directly, and that is the
 point of writing them down: `vulture` deletes unreachable code but has nothing
@@ -58,6 +60,8 @@ lines — the contract.md citation rule, the spec sub-bullet, and the contract-e
 rule — if the skill was not linked. Otherwise a rule points at something that
 is not there, and the whole file starts reading as decoration.
 
+If `review-pr` was not linked, cut the git rule back to `- Commit and push to main.`
+
 The contract-edit rule is the only thing that ever opens `removal.md`. Linking the
 skill without it ships a file nothing routes to.
 
@@ -69,17 +73,6 @@ does not prompt.
 ---
 
 ## ASK — genuinely contextual, no safe default
-
-### Git workflow
-
-- **solo** (default — matches how this scaffold is normally used):
-  ```
-  - Commit and push in main branch. Never generate non-main branch on the server side.
-  ```
-- **team**:
-  ```
-  - Branch from main and open a PR. Never push directly to main.
-  ```
 
 ### Rigor stance
 

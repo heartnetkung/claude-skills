@@ -44,6 +44,13 @@
       "skills": ["./skills/markdown-check"]
     },
     {
+      "name": "review-pr",
+      "description": "Opens a PR whose description carries the review evidence: every changed screen at each supported device size for UI work, the REST API diff and persistence-layer changes for backend work. Needs gh and a GitHub remote",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/review-pr"]
+    },
+    {
       "name": "slides",
       "description": "Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change: outline, draft, two reviewers, SVG diagrams, licensed photos. Needs pandoc and LibreOffice",
       "source": "./",

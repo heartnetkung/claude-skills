@@ -9,6 +9,7 @@ An opinionated, battle-tested Claude Code workflow, shared for the like-minded.
 | [`module-design`](#module-design) | Designs a module before coding it — `contract.md` (permanent) vs `spec.md`/`boundary.md` (deleted when the module lands), then two parallel review agents |
 | [`slow-pytest-maintenance`](#slow-pytest-maintenance) | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
 | [`markdown-check`](#markdown-check) | Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle |
+| [`review-pr`](#review-pr) | Opens a PR whose description carries the review evidence — every changed screen at each supported device size for UI work, the REST API diff and persistence-layer changes for backend work |
 | [`slides`](#slides) | Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change — outline → first draft, two parallel reviewers (editor, flow), SVG diagrams, photo scouts with license-tagged picks |
 | [`vibe-prototype`](#vibe-prototype) | Builds a throwaway, locally-running UI prototype on realistic dummy data to decide what to build, then hands it off as a spec with screenshots |
 
@@ -63,6 +64,12 @@ opinionated way, and every rule carries the reasoning behind it.
 - **Benefit:** improves the coherence, concision and correctness of any Markdown.
 - **Tradeoff:** none.
 
+### review-pr
+- **Precondition:** GitHub and `gh`; squash-merge only, so the screenshots never reach `main`.
+- **Benefit:** responsive design reviewed at a glance, and API and storage changes read off
+  the description instead of dug out of the diff.
+- **Tradeoff:** a slower PR; the UI part needs a browser test suite to shoot with.
+
 ### slides
 - **Precondition:** LibreOffice.
 - **Benefit:** faster iteration: write in Markdown, convert to .pptx deterministically;
@@ -105,6 +112,8 @@ skills/
     file-issue.sh       the one issue it files, with client-side dedupe
   markdown-check/
     SKILL.md            the five checks, what to fix vs. ask, the report format
+  review-pr/
+    SKILL.md            the evidence to collect, the screenshot commit-and-delete, the description template
   slides/
     SKILL.md            entry point: the build → check → reload loop; routes to one phase file
     outline.md          phase — interview (2 rounds), outline, approval, first full draft, delete the outline

@@ -47,13 +47,15 @@ First call:
 
 Second call:
 
-5. **Git workflow** — solo (default) or team. Selects a `claude-md-rules.md`
-   ASK rule.
+5. **GitHub repo** — is it created and set as `origin`? If not, ask the user to
+   create it now (`gh repo create`), or to say the project will not be on GitHub.
+   Step 4 reads the answer.
 6. **Rigor stance** — normal (default) or explicitly experimental. Default emits
    nothing; see the rule bank on why this is never inferred.
 7. **Skills** — which shared skills to enable in this project? Multi-select
    (`multiSelect: true`), one option per skill:
    - `module-design` — default yes. The `CLAUDE.md` module rules route to it.
+   - `review-pr` — default yes. The `CLAUDE.md` git rule routes to it.
    - `slow-pytest-maintenance` — default yes when CI was accepted above. It files
      a GitHub issue when the suite crosses 15s, so it needs a GitHub remote;
      without one `gh issue create` fails and the skill is decoration.
@@ -181,6 +183,18 @@ uv run pre-commit install
 uv run pre-commit run --all-files
 ```
 
+**If `origin` is on GitHub, make squash the only way to merge a PR:**
+
+```bash
+gh api -X PATCH repos/{owner}/{repo} \
+  -F allow_squash_merge=true -F allow_merge_commit=false -F allow_rebase_merge=false
+```
+
+`review-pr` commits screenshots to the PR branch and deletes them in its last
+commit; only a squash keeps them out of `main`'s history. `gh` fills in
+`{owner}/{repo}` from the remote. With no GitHub remote, skip this and say so in
+one line.
+
 **The last command must pass clean.** A scaffold that arrives failing its own
 checks teaches the user to ignore them, which costs more than the scaffold
 saves. If a hook fails, fix the scaffold and rerun — never hand over with a
@@ -235,9 +249,9 @@ loaded through a symlink.
 Link, don't copy. `claude-skills` is the only copy of each skill, so a fix there
 reaches every project, and there is nothing to keep in sync.
 
-The cost: a committed link is broken in any clone that lacks `claude-skills` at
-the same relative path, and the skill silently disappears there. Say so in the
-hand-off if the interview chose the team git workflow.
+The scaffolded `.gitignore` ignores `.claude/skills/`: a link only resolves where
+`claude-skills` sits at the same relative path. The cost: a fresh clone has no
+skills until the links are made again. Say so in the hand-off.
 
 ## Step 6 — Hand off
 

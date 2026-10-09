@@ -218,3 +218,5 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Skills symlinked from a local claude-skills clone
+.claude/skills/
