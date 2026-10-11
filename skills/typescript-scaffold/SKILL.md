@@ -75,7 +75,7 @@ Second call:
 7. **Skills** — which shared skills to enable in this project? Multi-select
    (`multiSelect: true`), one option per skill:
    - `module-design` — default yes. The `CLAUDE.md` module rules route to it.
-   - `review-pr` — default yes. The `CLAUDE.md` git rule routes to it.
+   - `open-pr` — default yes. The `CLAUDE.md` git rule routes to it.
    - `markdown-check` — default no.
 8. For `fullstack`, `back`, `front` only: **Extra packages** — anything that
    should be its own package beside the apps, such as a rendering engine or a
@@ -270,7 +270,7 @@ gh api -X PATCH repos/{owner}/{repo} \
   -F allow_squash_merge=true -F allow_merge_commit=false -F allow_rebase_merge=false
 ```
 
-`review-pr` commits screenshots to the PR branch and deletes them in its last
+`open-pr` commits screenshots to the PR branch and deletes them in its last
 commit; only a squash keeps them out of `main`'s history. `gh` fills in
 `{owner}/{repo}` from the remote. With no GitHub remote, skip this and say so in
 one line.

@@ -1,5 +1,5 @@
 ---
-name: review-pr
+name: open-pr
 description: Open a pull request whose description carries the evidence a reviewer needs — screenshots of every changed screen at each supported device size for UI work, and the REST API diff plus the persistence-layer changes for backend work. Use when opening a PR for ticket work, or when asked to write or improve a PR description.
 ---
 

@@ -44,11 +44,11 @@
       "skills": ["./skills/markdown-check"]
     },
     {
-      "name": "review-pr",
+      "name": "open-pr",
       "description": "Opens a PR whose description carries the review evidence: every changed screen at each supported device size for UI work, the REST API diff and persistence-layer changes for backend work. Needs gh and a GitHub remote",
       "source": "./",
       "strict": false,
-      "skills": ["./skills/review-pr"]
+      "skills": ["./skills/open-pr"]
     },
     {
       "name": "slides",
