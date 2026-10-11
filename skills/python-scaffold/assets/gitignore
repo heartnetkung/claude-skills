@@ -218,5 +218,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Skills symlinked from a local claude-skills clone
-.claude/skills/
+# Skills are ignored (symlinks from a local claude-skills clone, or personal),
+# except the ones the team commits, named team-*
+.claude/skills/*
+!.claude/skills/team-*

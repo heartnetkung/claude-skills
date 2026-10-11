@@ -249,9 +249,11 @@ loaded through a symlink.
 Link, don't copy. `claude-skills` is the only copy of each skill, so a fix there
 reaches every project, and there is nothing to keep in sync.
 
-The scaffolded `.gitignore` ignores `.claude/skills/`: a link only resolves where
-`claude-skills` sits at the same relative path. The cost: a fresh clone has no
-skills until the links are made again. Say so in the hand-off.
+The scaffolded `.gitignore` ignores everything in `.claude/skills/` except
+`team-*`: a link only resolves where `claude-skills` sits at the same relative
+path. The cost: a fresh clone has no linked skills until the links are made
+again. Say so in the hand-off. A skill the team commits is a real folder named
+`team-<name>`, never a link.
 
 ## Step 6 — Hand off
 
