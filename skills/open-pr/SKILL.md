@@ -107,3 +107,29 @@ Closes #<ticket>. <One or two sentences: what this PR is, and what it leaves to 
 
 Push the branch — the image commit must be on GitHub before its links resolve — and open the PR
 with `gh pr create --body-file`. Do not merge it: the user reviews and merges.
+
+## 6. Keep it mergeable
+
+Resolve merge conflicts without asking, for two hours after opening the PR.
+
+**Poll.** Right after `gh pr create`, start a background `Monitor` with an until-loop that runs
+`gh pr view <n> --json state,mergeable` every 60 seconds and exits when `mergeable` is
+`CONFLICTING`, when `state` is not `OPEN`, or when two hours have passed since the PR was
+opened. `UNKNOWN` means GitHub is still computing; keep polling.
+
+**Fix.** On a conflict, on the PR branch:
+
+1. `git fetch origin main && git merge origin/main`. Merge, never rebase: the repo
+   squash-merges, so the merge commit never reaches `main`, and no force-push is needed.
+2. Resolve each conflicted file by the intent of both sides, read from `git log origin/main`
+   for the commits that touched it.
+3. Run the project's check command (its README or CLAUDE.md names it), commit the merge, push.
+4. Comment on the PR: the conflicted files and how each was resolved.
+
+Then start the loop again with the time left.
+
+**Stop and ask instead** when both sides changed the same logic and keeping both is not
+possible, or when the check fails after the merge. Leave the merge uncommitted and explain
+the conflict to the user with choices.
+
+The loop ends when the PR is merged or closed, or after two hours.
