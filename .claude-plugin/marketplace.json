@@ -44,6 +44,13 @@
       "skills": ["./skills/markdown-check"]
     },
     {
+      "name": "start-ticket",
+      "description": "Starts a ticket: reads it, explores the code, decides obvious questions and reports them, asks the rest, and gets the plan (with a 1-4 PR split) approved",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/start-ticket"]
+    },
+    {
       "name": "open-pr",
       "description": "Opens a PR whose description carries the review evidence: every changed screen at each supported device size for UI work, the REST API diff and persistence-layer changes for backend work. Needs gh and a GitHub remote",
       "source": "./",

@@ -9,6 +9,7 @@ An opinionated, battle-tested Claude Code workflow, shared for the like-minded.
 | [`module-design`](#module-design) | Designs a module before coding it — `contract.md` (permanent) vs `spec.md`/`boundary.md` (deleted when the module lands), then two parallel review agents |
 | [`slow-pytest-maintenance`](#slow-pytest-maintenance) | Files a GitHub issue when a pytest suite crosses 15s, then returns to the interrupted task — it never optimizes the tests |
 | [`markdown-check`](#markdown-check) | Edits a markdown file in place for coherence, concision, ambiguous terms, and stale references; asks about what it cannot settle |
+| [`start-ticket`](#start-ticket) | Starts a ticket — reads it, explores the code, decides the obvious questions and reports them, asks the rest, and gets the plan (with a 1–4 PR split) approved |
 | [`open-pr`](#open-pr) | Opens a PR whose description carries the review evidence — every changed screen at each supported device size for UI work, the REST API diff and persistence-layer changes for backend work |
 | [`slides`](#slides) | Builds PowerPoint decks from Markdown with pandoc and reloads LibreOffice on every change — outline → first draft, two parallel reviewers (editor, flow), SVG diagrams, photo scouts with license-tagged picks |
 | [`vibe-prototype`](#vibe-prototype) | Builds a throwaway, locally-running UI prototype on realistic dummy data to decide what to build, then hands it off as a spec with screenshots |
@@ -64,6 +65,11 @@ opinionated way, and every rule carries the reasoning behind it.
 - **Benefit:** improves the coherence, concision and correctness of any Markdown.
 - **Tradeoff:** none.
 
+### start-ticket
+- **Benefit:** fewer questions per ticket — obvious ones are decided and reported with their
+  reasons, and the PR split is never asked.
+- **Tradeoff:** the agent's decisions and split may need correcting in plan review.
+
 ### open-pr
 - **Precondition:** GitHub and `gh`; squash-merge only, so the screenshots never reach `main`.
 - **Benefit:** responsive design reviewed at a glance, and API and storage changes read off
@@ -112,8 +118,10 @@ skills/
     file-issue.sh       the one issue it files, with client-side dedupe
   markdown-check/
     SKILL.md            the five checks, what to fix vs. ask, the report format
+  start-ticket/
+    SKILL.md            the steps from reading a ticket to an approved plan
   open-pr/
-    SKILL.md            the evidence to collect, the screenshot commit-and-delete, the description template
+    SKILL.md            the evidence to collect, the screenshot commit-and-delete, the description template, cleanup after the last merge
   slides/
     SKILL.md            entry point: the build → check → reload loop; routes to one phase file
     outline.md          phase — interview (2 rounds), outline, approval, first full draft, delete the outline

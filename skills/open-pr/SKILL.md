@@ -79,6 +79,11 @@ Closes #<ticket>. <One or two sentences: what this PR is, and what it leaves to 
 ## Where it departs from the ticket
 <One bullet per departure, each with its reason. A done-when line met another way goes here.>
 
+## Decisions
+<Important obvious questions decided after the plan was approved, one bullet each: where
+(UI part, route, how the edge case happens, or which principle and requirement), the problem,
+the choice, and why — with the preference that would flip it.>
+
 ## Also changed
 <Changes outside the ticket's scope, each with why it was needed.>
 
@@ -133,3 +138,18 @@ possible, or when the check fails after the merge. Leave the merge uncommitted a
 the conflict to the user with choices.
 
 The loop ends when the PR is merged or closed, or after two hours.
+
+## 7. Clean up after the last PR
+
+When the loop ends with `state` `MERGED`, clean up — but only after the ticket's last PR. If
+`gh pr list --state open --search "#<ticket>"` lists another PR for the ticket, stop here.
+
+1. Delete the remote branch: `git push origin --delete <branch>`. Already gone means GitHub
+   deleted it on merge; move on.
+2. Remove the worktree: `ExitWorktree` if this session is inside it, else
+   `git worktree remove <path>`.
+3. Delete the local branch with `git branch -D <branch>`. A squash merge leaves it looking
+   unmerged, so `-d` refuses; `gh` has just confirmed the merge.
+4. `git switch main && git pull && git fetch --prune`.
+
+Report each thing removed, one line each.
