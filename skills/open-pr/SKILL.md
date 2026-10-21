@@ -111,7 +111,12 @@ the choice, and why — with the preference that would flip it.>
 ## 5. Open it
 
 Push the branch — the image commit must be on GitHub before its links resolve — and open the PR
-with `gh pr create --body-file`. Do not merge it: the user reviews and merges.
+with `gh pr create --base main --body-file`. Do not merge it: the user reviews and merges.
+
+**Never stack a PR on another PR's branch.** A squash merge puts the lower PR on `main` as one new
+commit, unrelated to the commits the upper PR was built on, so the upper PR then conflicts with
+`main` over every file the two share. If the ticket's previous PR is still open, wait for it to
+merge, then branch the next one from `main`.
 
 ## 6. Keep it mergeable
 

@@ -52,6 +52,7 @@ description.
 
 The plan includes the PR split. Decide it yourself: 1 to 4 PRs. Do not ask the user how to
 split the ticket; they review the split in the plan and can object there. Each PR can be
-reviewed and merged on its own and leaves `main` working. Prefer fewer PRs; split only where
+reviewed and merged on its own and leaves `main` working. The PRs go one at a time, each based on
+`main` and opened after the previous one merges, never stacked (`open-pr` says why). Prefer fewer PRs; split only where
 one PR would touch too many files to review, or where an early PR unblocks the rest. Give one
 line per PR: its scope and the files it touches.

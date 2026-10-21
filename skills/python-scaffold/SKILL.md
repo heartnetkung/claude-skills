@@ -183,15 +183,19 @@ uv run pre-commit install
 uv run pre-commit run --all-files
 ```
 
-**If `origin` is on GitHub, make squash the only way to merge a PR:**
+**If `origin` is on GitHub, make squash the only way to merge a PR, and delete
+a PR's branch when it merges:**
 
 ```bash
 gh api -X PATCH repos/{owner}/{repo} \
-  -F allow_squash_merge=true -F allow_merge_commit=false -F allow_rebase_merge=false
+  -F allow_squash_merge=true -F allow_merge_commit=false -F allow_rebase_merge=false \
+  -F delete_branch_on_merge=true
 ```
 
 `open-pr` commits screenshots to the PR branch and deletes them in its last
-commit; only a squash keeps them out of `main`'s history. `gh` fills in
+commit; only a squash keeps them out of `main`'s history. A merged PR's branch
+is deleted so that nothing can merge into it afterwards: a PR opened on top of
+it moves to `main` instead of landing on a finished branch. `gh` fills in
 `{owner}/{repo}` from the remote. With no GitHub remote, skip this and say so in
 one line.
 
