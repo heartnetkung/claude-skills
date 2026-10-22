@@ -123,7 +123,7 @@ merge, then branch the next one from `main`.
 Resolve merge conflicts without asking, for two hours after opening the PR.
 
 **Poll.** Right after `gh pr create`, start a background `Monitor` with an until-loop that runs
-`gh pr view <n> --json state,mergeable` every 3 minutes and exits when `mergeable` is
+`gh pr view <n> --json state,mergeable` every 6 minutes and exits when `mergeable` is
 `CONFLICTING`, when `state` is not `OPEN`, or when two hours have passed since the PR was
 opened. `UNKNOWN` means GitHub is still computing; keep polling.
 
