@@ -21,3 +21,6 @@ playwright-report/
 # except the ones the team commits, named team-*
 .claude/skills/*
 !.claude/skills/team-*
+
+# Claude Code agent worktrees: each is its own checkout, checked by its own hook
+.claude/worktrees/
