@@ -1,6 +1,6 @@
 ---
 name: module-design
-description: How to design a new module before coding it, and how to retire its build docs afterwards. Use when starting a new module or package (contract.md, then spec.md, then boundary.md, then two parallel review agents for simplification/reuse and design quality), and again when that module's implementation is about to be committed or pushed (promote what building taught you, then delete the spec and boundary). Also use when asked to prune, retire, or clean up an existing spec or module README.
+description: How to design a new module, or a change to an existing module's behaviour or contract, before coding it, and how to retire its build docs afterwards. Use when starting a new module or package, or changing an existing one's behaviour or contract (contract.md, then spec.md, then boundary.md, then two parallel review agents for simplification/reuse and design quality), and again when that module's implementation is about to be committed or pushed (promote what building taught you, then delete the spec and boundary). Also use when asked to prune, retire, or clean up an existing spec or module README.
 ---
 
 # Module docs: contract.md is permanent, the build docs are not

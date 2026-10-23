@@ -42,7 +42,7 @@ text, and invite a free-form answer; it is often a principle that makes a third 
 
 ## 4. Choose the design route
 
-Use the `module-design` skill for most implementations. Skip it only when the change is tiny.
+Use the `module-design` skill for every change except trivial ones like a rename.
 
 ## 5. Plan and get approval
 
