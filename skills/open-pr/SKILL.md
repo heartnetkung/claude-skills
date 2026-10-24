@@ -120,11 +120,11 @@ merge, then branch the next one from `main`.
 
 ## 6. Keep it mergeable
 
-Resolve merge conflicts without asking, for two hours after opening the PR.
+Resolve merge conflicts without asking, for 30 minutes after opening the PR.
 
 **Poll.** Right after `gh pr create`, start a background `Monitor` with an until-loop that runs
 `gh pr view <n> --json state,mergeable` every 6 minutes and exits when `mergeable` is
-`CONFLICTING`, when `state` is not `OPEN`, or when two hours have passed since the PR was
+`CONFLICTING`, when `state` is not `OPEN`, or when 30 minutes have passed since the PR was
 opened. `UNKNOWN` means GitHub is still computing; keep polling.
 
 **Fix.** On a conflict, on the PR branch:
@@ -142,7 +142,7 @@ Then start the loop again with the time left.
 possible, or when the check fails after the merge. Leave the merge uncommitted and explain
 the conflict to the user with choices.
 
-The loop ends when the PR is merged or closed, or after two hours.
+The loop ends when the PR is merged or closed, or after 30 minutes.
 
 ## 7. Clean up after the last PR
 
