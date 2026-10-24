@@ -8,7 +8,7 @@ description: Start work on a ticket — read it, explore the code, decide the ob
 ## 1. Read the ticket
 
 Read the ticket and its comments in full. Then show it on the status line:
-`bash .claude/skills/start-ticket/set-status.sh <ticket> preparation`.
+`bash .claude/skills/start-ticket/set-status.sh <ticket> "<title>" preparation`.
 
 ## 2. Explore the codebase
 
@@ -58,5 +58,5 @@ reviewed and merged on its own and leaves `main` working. The PRs go one at a ti
 one PR would touch too many files to review, or where an early PR unblocks the rest. Give one
 line per PR: its scope and the files it touches.
 
-When starting work on each PR, run `bash .claude/skills/start-ticket/set-status.sh <ticket> <i> <total>`;
+When starting work on each PR, run `bash .claude/skills/start-ticket/set-status.sh <ticket> "<title>" <i> <total>`;
 after the last PR merges, run `bash .claude/skills/start-ticket/set-status.sh clear`.
