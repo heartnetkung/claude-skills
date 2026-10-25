@@ -110,44 +110,31 @@ the choice, and why — with the preference that would flip it.>
 
 ## 5. Open it
 
-Push the branch — the image commit must be on GitHub before its links resolve — and open the PR
-with `gh pr create --base main --body-file`. Do not merge it: the user reviews and merges.
+**Open it conflict-free.** Right before opening, on the PR branch:
+
+1. `git fetch origin main && git merge origin/main`. Merge, never rebase: the repo
+   squash-merges, so the merge commit never reaches `main`, and no force-push is needed.
+2. Resolve each conflicted file by the intent of both sides, read from
+   `git log --oneline $(git merge-base HEAD origin/main)..origin/main -- <file>`.
+3. Run the project's check command (its README or CLAUDE.md names it) and commit the merge.
+   List each conflicted file and how it was resolved under "Also changed".
+
+**Stop and ask instead** when both sides changed the same logic and keeping both is not
+possible, or when the check fails after the merge. Leave the merge uncommitted and explain
+the conflict to the user with choices.
+
+Then push the branch — the image commit must be on GitHub before its links resolve — and open
+the PR with `gh pr create --base main --body-file`. Do not merge it: the user reviews and merges.
 
 **Never stack a PR on another PR's branch.** A squash merge puts the lower PR on `main` as one new
 commit, unrelated to the commits the upper PR was built on, so the upper PR then conflicts with
 `main` over every file the two share. If the ticket's previous PR is still open, wait for it to
 merge, then branch the next one from `main`.
 
-## 6. Keep it mergeable
+## 6. Clean up after the last PR
 
-Resolve merge conflicts without asking, for 30 minutes after opening the PR.
-
-**Poll.** Right after `gh pr create`, start a background `Monitor` with an until-loop that runs
-`gh pr view <n> --json state,mergeable` every 6 minutes and exits when `mergeable` is
-`CONFLICTING`, when `state` is not `OPEN`, or when 30 minutes have passed since the PR was
-opened. `UNKNOWN` means GitHub is still computing; keep polling.
-
-**Fix.** On a conflict, on the PR branch:
-
-1. `git fetch origin main && git merge origin/main`. Merge, never rebase: the repo
-   squash-merges, so the merge commit never reaches `main`, and no force-push is needed.
-2. Resolve each conflicted file by the intent of both sides, read from `git log origin/main`
-   for the commits that touched it.
-3. Run the project's check command (its README or CLAUDE.md names it), commit the merge, push.
-4. Comment on the PR: the conflicted files and how each was resolved.
-
-Then start the loop again with the time left.
-
-**Stop and ask instead** when both sides changed the same logic and keeping both is not
-possible, or when the check fails after the merge. Leave the merge uncommitted and explain
-the conflict to the user with choices.
-
-The loop ends when the PR is merged or closed, or after 30 minutes.
-
-## 7. Clean up after the last PR
-
-When the loop ends with `state` `MERGED`, clean up — but only after the ticket's last PR. If
-`gh pr list --state open --search "#<ticket>"` lists another PR for the ticket, stop here.
+When the user says the PR merged and `gh pr view <n> --json state` confirms `MERGED`, clean
+up — but only after the ticket's last PR. If `gh pr list --state open --search "#<ticket>"` lists another PR for the ticket, stop here.
 
 1. Delete the remote branch: `git push origin --delete <branch>`. Already gone means GitHub
    deleted it on merge; move on.
