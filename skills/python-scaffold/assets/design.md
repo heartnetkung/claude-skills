@@ -12,6 +12,10 @@ use.
 
 _Placeholder._ What this does that the alternatives do not, and the choices that follow from it.
 
+## Terminology
+
+_Placeholder._ One line per domain term: what it means here, and the word used for it in code.
+
 ## Rules
 
 _Placeholder._ One heading per rule every feature or screen follows, each with the reason.
