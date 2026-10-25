@@ -137,10 +137,12 @@ Once `gh pr create` prints the PR's URL, don't wait for the merge: GitHub holds 
 deletes it on merge. If this session is inside the worktree, `ExitWorktree` with `keep` first.
 Then, from the main checkout:
 
-`bash .claude/skills/open-pr/cleanup.sh <branch>`
+`bash .claude/skills/open-pr/cleanup.sh <branch>`, adding `<ticket>` on the ticket's last PR
 
-It refuses, and removes nothing, when the worktree has uncommitted or untracked files or the
-branch has commits not on origin; resolve what it lists and rerun. Relay its output.
+It also clears the status line, and with `<ticket>` removes the ticket's WIP label; the PR's
+merge closes the ticket through `Closes #<ticket>`. It refuses, and removes nothing, when the
+worktree has uncommitted or untracked files or the branch has commits not on origin; resolve
+what it lists and rerun. Relay its output.
 
 Review changes come in a new session: `git fetch origin <branch>`, then
 `git worktree add <path> <branch>`.

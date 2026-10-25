@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Remove a pushed PR branch's worktree and local branch, once nothing on them is missing from
-# origin. Run from outside that worktree. Usage: cleanup.sh <branch>
+# origin, and clear the session's status line. Run from outside that worktree.
+# With <ticket>, given on the ticket's last PR, also remove the ticket's WIP label.
+# Usage: cleanup.sh <branch> [<ticket>]
 set -euo pipefail
 
-branch=${1:?usage: cleanup.sh <branch>}
+branch=${1:?usage: cleanup.sh <branch> [<ticket>]}
+ticket=${2:-}
 
 wt=$(git worktree list --porcelain | awk -v b="branch refs/heads/$branch" '
   /^worktree / { path = substr($0, 10) }
@@ -41,3 +44,8 @@ if [ -n "$wt" ]; then
   echo "removed worktree $wt"
 fi
 git branch -D "$branch"
+bash "$(dirname "$0")/../start-ticket/set-status.sh" clear
+if [ -n "$ticket" ]; then
+  gh issue edit "$ticket" --remove-label WIP
+  echo "removed WIP from #$ticket"
+fi
