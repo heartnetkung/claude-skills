@@ -4,21 +4,14 @@
 # line 1 is the head it may shorten, line 2 the progress tail it always shows.
 #   set-status.sh <ticket> "<name>" preparation   -> #<ticket> <name>: preparation
 #   set-status.sh <ticket> "<name>" <i> <total>   -> #<ticket> <name>: PR <i>/<total>
-#   set-status.sh clear                           -> back to folder@branch
 set -euo pipefail
 
-usage() { echo "usage: set-status.sh <ticket> \"<name>\" preparation | <ticket> \"<name>\" <i> <total> | clear" >&2; exit 1; }
+usage() { echo "usage: set-status.sh <ticket> \"<name>\" preparation | <ticket> \"<name>\" <i> <total>" >&2; exit 1; }
 
 [ -n "${CLAUDE_CODE_SESSION_ID:-}" ] || { echo "CLAUDE_CODE_SESSION_ID is not set" >&2; exit 1; }
 dir="$HOME/.claude/ticket-status"
 file="$dir/$CLAUDE_CODE_SESSION_ID"
 int='^[0-9]+$'
-
-if [ "$#" -eq 1 ] && [ "$1" = clear ]; then
-  rm -f "$file"
-  echo "status cleared"
-  exit 0
-fi
 
 [[ "${1:-}" =~ $int ]] && [ -n "${2:-}" ] || usage
 # One line, no backslashes: the status line prints the name through printf %b.
@@ -37,5 +30,7 @@ else
 fi
 
 mkdir -p "$dir"
+# Nothing else deletes a session's file; no ticket session lasts a week.
+find "$dir" -type f -mtime +7 -delete
 printf '%s\n%s\n' "#$1 $name" "$tail" > "$file"
 echo "status: #$1 $name$tail"

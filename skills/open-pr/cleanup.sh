@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Remove a pushed PR branch's worktree and local branch, once nothing on them is missing from
-# origin, and clear the session's status line. Run from outside that worktree.
+# origin. Run from outside that worktree.
 # With <ticket>, given on the ticket's last PR, also remove the ticket's WIP label.
 # Usage: cleanup.sh <branch> [<ticket>]
 set -euo pipefail
@@ -48,4 +48,3 @@ if [ -n "$ticket" ]; then
   gh issue edit "$ticket" --remove-label WIP
   echo "removed WIP from #$ticket"
 fi
-bash "$(dirname "$0")/../start-ticket/set-status.sh" clear

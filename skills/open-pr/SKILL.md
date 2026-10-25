@@ -139,8 +139,7 @@ Then, from the main checkout:
 
 `bash .claude/skills/open-pr/cleanup.sh <branch>`, adding `<ticket>` on the ticket's last PR
 
-It also clears the status line, and with `<ticket>` removes the ticket's WIP label; the PR's
-merge closes the ticket through `Closes #<ticket>`. It refuses, and removes nothing, when the
+With `<ticket>` it also removes the ticket's WIP label; the PR's merge closes the ticket through `Closes #<ticket>`. It refuses, and removes nothing, when the
 worktree has uncommitted or untracked files or the branch has commits not on origin; resolve
 what it lists and rerun. Relay its output.
 

@@ -63,7 +63,8 @@ one PR would touch too many files to review, or where an early PR unblocks the r
 line per PR: its scope and the files it touches.
 
 When starting work on each PR, run `bash .claude/skills/start-ticket/set-status.sh <ticket> "<title>" <i> <total>`;
-`open-pr`'s cleanup clears it, and removes the WIP label after the last PR.
+it stays after the PR opens, as context for reviewing it. `open-pr`'s cleanup removes the WIP
+label after the last PR.
 
 ## 6. One PR per session
 
