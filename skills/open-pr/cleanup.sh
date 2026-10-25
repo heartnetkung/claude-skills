@@ -44,8 +44,8 @@ if [ -n "$wt" ]; then
   echo "removed worktree $wt"
 fi
 git branch -D "$branch"
-bash "$(dirname "$0")/../start-ticket/set-status.sh" clear
 if [ -n "$ticket" ]; then
   gh issue edit "$ticket" --remove-label WIP
   echo "removed WIP from #$ticket"
 fi
+bash "$(dirname "$0")/../start-ticket/set-status.sh" clear
