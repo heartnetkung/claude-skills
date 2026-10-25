@@ -12,9 +12,9 @@ use.
 
 _Placeholder._ What this does that the alternatives do not, and the choices that follow from it.
 
-## Terminology
+## Terms
 
-_Placeholder._ One line per domain term: what it means here, and the word used for it in code.
+- **Placeholder term**: one bullet per domain term — what it is, what it owns, and an example.
 
 ## Rules
 
