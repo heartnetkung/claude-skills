@@ -14,7 +14,8 @@ _Placeholder._ What this does that the alternatives do not, and the choices that
 
 ## Terms
 
-- **Placeholder term**: one bullet per domain term — what it is, what it owns, and an example.
+- **Placeholder term**: only a term that must be told apart from another: a level of a hierarchy,
+  a near-synonym, or a word with two meanings. Define it in the doc that owns it.
 
 ## Rules
 
