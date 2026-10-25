@@ -131,10 +131,9 @@ commit, unrelated to the commits the upper PR was built on, so the upper PR then
 `main` over every file the two share. If the ticket's previous PR is still open, wait for it to
 merge, then branch the next one from `main`.
 
-## 6. Clean up after the last PR
+## 6. Clean up after the merge
 
-When the user says the PR merged and `gh pr view <n> --json state` confirms `MERGED`, clean
-up — but only after the ticket's last PR. If `gh pr list --state open --search "#<ticket>"` lists another PR for the ticket, stop here.
+When the user says the PR merged and `gh pr view <n> --json state` confirms `MERGED`, clean up.
 
 1. Delete the remote branch: `git push origin --delete <branch>`. Already gone means GitHub
    deleted it on merge; move on.
