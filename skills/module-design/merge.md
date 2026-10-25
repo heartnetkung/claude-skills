@@ -1,6 +1,6 @@
 # Phase 2 — at merge / commit / push
 
-`spec.md` and `boundary.md` are deleted here. Deletion is unconditional, so there is no
+`spec.md` and `boundary.md` are deleted here, in the module's last PR. Deletion is unconditional, so there is no
 per-section judgment. What remains is capturing what could not be written in advance.
 
 1. **Does the shipped module match the boundary it was reviewed against?** Diff `boundary.md`'s

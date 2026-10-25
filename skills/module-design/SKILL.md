@@ -7,10 +7,10 @@ description: How to design a new module, or a change to an existing module's beh
 
 - **`contract.md`** — what the rest of the system may assume of this module, and the rules keeping
   it true. Permanent. Written *before* the spec.
-- **`spec.md`** — scaffolding for writing the code. **Deleted when the module lands.** Never
+- **`spec.md`** — scaffolding for writing the code. **Deleted when all PRs of the module land.** Never
   named `README.md`: a doomed file must not wear a durable name.
 - **`boundary.md`** — everything the module touches on the outside. Written *after* the spec, in a
-  separate pass. **Deleted when the module lands**, alongside the spec.
+  separate pass. **Deleted when all PRs of the module land**, alongside the spec.
 
 **Default home for a durable fact is the code it is about** — call-site comment, test, docstring,
 `--help`, or the commit message that made the change. `contract.md` is the narrow exception; when in doubt it is not a clause.
@@ -39,4 +39,5 @@ has finished.
 
 The build docs are deleted here, but only after what could not be written in advance is captured —
 and that is the part that gets skipped when it is done from memory. **Read `merge.md` and follow
-its seven steps.**
+its seven steps** in the module's last PR. Earlier PRs commit the build docs unchanged, so the
+next PR's session reads them from `main`.

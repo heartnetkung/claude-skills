@@ -8,7 +8,11 @@ description: Start work on a ticket — read it, explore the code, decide the ob
 ## 1. Read the ticket
 
 Read the ticket and its comments in full. Then show it on the status line:
-`bash .claude/skills/start-ticket/set-status.sh <ticket> "<title>" preparation`.
+`bash .claude/skills/start-ticket/set-status.sh <ticket> "<title>" preparation`, and label it
+for humans: `gh issue edit <ticket> --add-label WIP` (create the label first if it is missing).
+
+**Resuming:** if a comment is a handoff from an earlier session, follow it instead of steps 2–5:
+check its plan still fits current `main`, report any change to the user, and start its next PR.
 
 ## 2. Explore the codebase
 
@@ -59,4 +63,19 @@ one PR would touch too many files to review, or where an early PR unblocks the r
 line per PR: its scope and the files it touches.
 
 When starting work on each PR, run `bash .claude/skills/start-ticket/set-status.sh <ticket> "<title>" <i> <total>`;
-after the last PR merges, run `bash .claude/skills/start-ticket/set-status.sh clear`.
+after the last PR merges, run `bash .claude/skills/start-ticket/set-status.sh clear` and
+`gh issue edit <ticket> --remove-label WIP`.
+
+## 6. One PR per session
+
+A session's cost grows with the square of its turns, so each session writes one PR. Once a PR
+that is not the last opens, post a handoff comment on the ticket, then fix review comments in
+this session as usual. The next session starts after the merge, from step 1. The handoff holds
+only what `main` and the merged PRs do not:
+
+- the remaining PRs, one line each, as in the plan;
+- links to the PRs opened so far;
+- decisions about the remaining PRs, the same shape as in step 3, that no PR description has.
+
+The build docs reach the next session through `main` (`module-design` keeps them until the
+module's last PR).
