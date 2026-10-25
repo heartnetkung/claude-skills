@@ -132,6 +132,7 @@ Create, substituting `{{PKG}}` `{{PROJECT}}` `{{PY}}` `{{PY_NODOT}}` (e.g. `3.13
 | `.env.example` | `assets/env.example` | frozen |
 | `typings/README.md` | `assets/typings-README.md` | frozen |
 | `README.md` | `assets/README.md` | substitute |
+| `design_docs/design.md` | `assets/design.md` | substitute |
 | `pyproject.toml` | `assets/pyproject-tools.toml` | generate head, append frozen tail |
 | `CLAUDE.md` | `assets/claude-md-rules.md` | assemble from bank |
 | `tach.toml` | Step 2 | generate |

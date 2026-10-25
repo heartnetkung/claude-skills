@@ -34,6 +34,7 @@ a user. Rules that cannot be universally true must be chosen out loud.
 - In git checked-in code, favor small well-maintained library over adhoc code (e.g. csv parsing).
 - Always draft spec or show plan to the user prior to coding, so that user can confirm. Spec is for large implementation and plan is for the small. Both should include key logic of what it is doing and in which file/module.
   - For a new or changed module under {{MODULES}}, invoke the `module-design` skill first — it governs the whole pre-code sequence (`contract.md`, `spec.md`, `boundary.md`, then two review agents) and the build docs' deletion at merge. Skip it only for trivial changes like a rename.
+- Before designing a feature or changing UI, read `design_docs/design.md`.
 - Edit `design_docs/` in the main checkout when discussing with the user; otherwise write everything in your own worktree.
 - Editing a `contract.md`: read the `module-design` skill's `removal.md` first and make the pass it describes over the clauses you touched — every time, not on a threshold. Most of what bloats a contract is added by changes that never load the skill, so a trigger those changes cannot miss is the only one that works. Once the file's prose passes ~180 lines — clauses only, not the `Tests:`/`Sites:` lines — that pass covers the whole file instead.
 - When you ask the user to decide something, always provide context and a few choices for user to choose. Label plain-text choices (a,b,c,...); AskUserQuestion options stay unlabeled.
@@ -54,6 +55,7 @@ Each earns its place by pairing with something installed:
 | red-green TDD | `vitest` + v8 coverage |
 | contract before spec | linked `module-design` skill |
 | module design for all but trivial changes | linked `module-design` skill |
+| read `design_docs/design.md` before designing | scaffolded `design_docs/design.md` |
 | `design_docs/` in main, code in a worktree | `EnterWorktree`, built into Claude Code |
 | removal pass on every contract edit | linked `module-design` skill (`removal.md`) |
 | `/simplify` then review before commit | both are built-in Claude Code skills |
