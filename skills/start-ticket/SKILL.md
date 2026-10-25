@@ -69,8 +69,8 @@ after the last PR merges, run `bash .claude/skills/start-ticket/set-status.sh cl
 ## 6. One PR per session
 
 A session's cost grows with the square of its turns, so each session writes one PR. Once a PR
-that is not the last opens, post a handoff comment on the ticket, then fix review comments in
-this session as usual. The next session starts after the merge, from step 1. The handoff holds
+that is not the last opens, post a handoff comment on the ticket. `open-pr` removes the worktree
+once the PR is pushed; review fixes happen in a new session. The next session starts after the merge, from step 1. The handoff holds
 only what `main` and the merged PRs do not:
 
 - the remaining PRs, one line each, as in the plan;

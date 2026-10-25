@@ -131,16 +131,16 @@ commit, unrelated to the commits the upper PR was built on, so the upper PR then
 `main` over every file the two share. If the ticket's previous PR is still open, wait for it to
 merge, then branch the next one from `main`.
 
-## 6. Clean up after the merge
+## 6. Clean up after the push
 
-When the user says the PR merged and `gh pr view <n> --json state` confirms `MERGED`, clean up.
+Once `gh pr create` prints the PR's URL, don't wait for the merge: GitHub holds the branch, and
+deletes it on merge. If this session is inside the worktree, `ExitWorktree` with `keep` first.
+Then, from the main checkout:
 
-1. Delete the remote branch: `git push origin --delete <branch>`. Already gone means GitHub
-   deleted it on merge; move on.
-2. Remove the worktree: `ExitWorktree` if this session is inside it, else
-   `git worktree remove <path>`.
-3. Delete the local branch with `git branch -D <branch>`. A squash merge leaves it looking
-   unmerged, so `-d` refuses; `gh` has just confirmed the merge.
-4. `git switch main && git pull && git fetch --prune`.
+`bash .claude/skills/open-pr/cleanup.sh <branch>`
 
-Report each thing removed, one line each.
+It refuses, and removes nothing, when the worktree has uncommitted or untracked files or the
+branch has commits not on origin; resolve what it lists and rerun. Relay its output.
+
+Review changes come in a new session: `git fetch origin <branch>`, then
+`git worktree add <path> <branch>`.
