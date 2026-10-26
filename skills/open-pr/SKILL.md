@@ -70,6 +70,11 @@ a new status code — and whether an existing client breaks.
 
 In this order. Drop a section that has nothing to say, except the two backend headings above.
 
+On a PR that is not the ticket's last, the first line is `Part of #<ticket> (PR <i> of <n>).`
+instead, and no closing keyword (close, fix, resolve, in any form) comes before `#<ticket>`
+anywhere in the body or title: GitHub closes the ticket on a keyword even mid-sentence, as in
+"PR 2 … closes #<ticket>".
+
 ```markdown
 Closes #<ticket>. <One or two sentences: what this PR is, and what it leaves to which ticket.>
 
