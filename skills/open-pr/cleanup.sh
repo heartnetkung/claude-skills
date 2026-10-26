@@ -2,6 +2,7 @@
 # Remove a pushed PR branch's worktree and local branch, once nothing on them is missing from
 # origin. Run from outside that worktree.
 # With <ticket>, given on the ticket's last PR, also remove the ticket's WIP label.
+# Every run also removes WIP from closed issues: a ticket closed by hand has no last PR.
 # Usage: cleanup.sh <branch> [<ticket>]
 set -euo pipefail
 
@@ -48,3 +49,8 @@ if [ -n "$ticket" ]; then
   gh issue edit "$ticket" --remove-label WIP
   echo "removed WIP from #$ticket"
 fi
+stale=$(gh issue list --state closed --label WIP --json number --jq '.[].number')
+for n in $stale; do
+  gh issue edit "$n" --remove-label WIP
+  echo "removed stale WIP from closed #$n"
+done
