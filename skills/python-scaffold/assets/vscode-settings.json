@@ -4,6 +4,7 @@
     "**/.coverage": true,
     "**/.hypothesis": true,
     "**/.ruff_cache": true,
-    "**/.vscode": true
+    "**/.vscode": true,
+    "**/.obsidian": true
   }
 }

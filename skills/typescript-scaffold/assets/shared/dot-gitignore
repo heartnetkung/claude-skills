@@ -24,3 +24,6 @@ playwright-report/
 
 # Claude Code agent worktrees: each is its own checkout, checked by its own hook
 .claude/worktrees/
+
+# Obsidian vault
+.obsidian/

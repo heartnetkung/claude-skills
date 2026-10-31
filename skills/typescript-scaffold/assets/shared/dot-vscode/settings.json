@@ -3,6 +3,7 @@
   "files.exclude": {
     "**/coverage": true,
     "**/dist": true,
-    "**/.vscode": true
+    "**/.vscode": true,
+    "**/.obsidian": true
   }
 }
