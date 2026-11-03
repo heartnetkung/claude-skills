@@ -64,8 +64,8 @@ line per PR: its scope and the files it touches.
 
 When starting work on each PR, run `bash .claude/skills/start-ticket/set-status.sh <ticket> "<title>" <i> <total>`;
 it stays after the PR opens, as context for reviewing it. `open-pr`'s cleanup removes the WIP
-label after the last PR. Run it from the main checkout, and enter the PR's worktree only after
-that, as a worktree has no `.claude/skills`.
+label after the last PR. Run it from the main checkout, as a worktree has no `.claude/skills`;
+then create the PR's worktree and write the code there.
 
 ## 6. One PR per session
 
