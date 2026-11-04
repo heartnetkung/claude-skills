@@ -8,6 +8,8 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "noEmit": true,
+    "incremental": true,
+    "tsBuildInfoFile": "${configDir}/node_modules/.cache/tsc.tsbuildinfo",
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
