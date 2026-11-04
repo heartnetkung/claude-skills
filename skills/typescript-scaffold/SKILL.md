@@ -282,7 +282,8 @@ one line.
 **`git add -A` is not optional.** `pnpm check` runs lefthook with
 `--all-files`, which means every *tracked* file. With nothing tracked, every
 job reports "skip" and the command exits 0 — a pass that checked nothing.
-Read the summary: it must list five jobs, each with a check mark.
+Read the summary: it must list `biome fix`, the four cheap checks and
+vitest, each with a check mark.
 
 For `fullstack` and `front`, also prove the slice in a browser:
 
