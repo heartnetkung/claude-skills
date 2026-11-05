@@ -42,6 +42,7 @@ a user. Rules that cannot be universally true must be chosen out loud.
   - Never ask the user to type `/code-review`. Invoke it yourself from the repo root as a background subprocess: `claude -p "/code-review" --allowedTools "Read Grep Glob Bash(git *)"`. It runs in a fresh session, reads the working tree and this file, and prints findings to stdout — relay them. Expect minutes on a large diff.
 - extensively log important information across branches execution flow. If something goes wrong, this information will be given to LLM to figure out what's wrong.
 - Commit and push to main. For ticket work, branch and open a PR with the `open-pr` skill instead.
+- Never schedule wakeups to wait on background work.
 ```
 
 Each earns its place by pairing with something installed:
